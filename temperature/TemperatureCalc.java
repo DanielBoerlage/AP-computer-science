@@ -1,13 +1,15 @@
+package temperature;
+
 import java.util.Scanner;
 
-class TemperatureCalc {
+public class TemperatureCalc {
 
-	Scanner sc = new Scanner(System.in);
+	static Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-		System.out.println("The temperature in Celcius is " + (int)((promptTemp() - 32) * .55555556));
+		System.out.println("The temperature in Celcius is " + (int)((promptTemp() - 32) * 5/9) + " degrees");
 	}
 
 	private static int promptTemp() {
@@ -15,7 +17,7 @@ class TemperatureCalc {
 			System.out.print("Enter a temperature in Fahrenheit: ");
 			return new Integer(sc.nextLine());
 		} catch(NumberFormatException e) {
-			System.out.println("Invalid integer")
+			System.out.println("Invalid integer");
 			return promptTemp();
 		}
 	}
