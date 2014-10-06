@@ -9,7 +9,7 @@ public class TemperatureCalc {
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-		System.out.println("The temperature in Celcius is " + (int)((promptTemp() - 32) * 5/9) + " degrees");
+		System.out.println("The temperature in Celcius is " + (int)((promptTemp() - 32) * .55555556) + " degrees");
 	}
 
 	private static int promptTemp() {
