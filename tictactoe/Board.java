@@ -8,38 +8,42 @@ import com.googlecode.lanterna.gui.Border;
 
 public class Board extends Window {
 
+	final String PLUS = "\u253c";
+	final String VERT = " \u2502 ";
+	final String HORIZ = "\u2500\u2500\u2500";
+	final String HORIZBAR = "\n" +  HORIZ + PLUS + HORIZ + PLUS + HORIZ + "\n";
+
 	char[][] grid;  // [column] [row]
+	Label text;
 
 	public Board() {
 		super("Game");
-
 		grid = new char[3][3];
 		for(int i = 0; i < 9; i++)
 			grid[i/3][i%3] = ' ';
-		grid[1][1] = 'X';
 
-		char horiz = '\u2500';
-		char vert = '\u2502';
-		char plus = '\u253c';
-
-		String horizbar = "" + horiz + horiz + horiz + plus + horiz + horiz + horiz + plus + horiz + horiz + horiz;
-
-        addComponent(new Label(" X " + vert + "   " + vert + " X \n" + horizbar +
-							   "\n O " + vert + "   " + vert + " X \n" + horizbar +
-							   "\n   " + vert + "   " + vert + " O "));
+		text = new Label(drawText());
+		addComponent(text);
 	}
 
-	@Override
-	public void onKeyPressed(Key key) {
-		close();
+	public boolean isFinished() {
+		for(int i = 0; i < 9; i++) {
+			if(grid[i/3][i%3] == ' ')
+				return false;
+		}
+		return true;
 	}
 
-	public String draw() {
-		String horizBar = "-+-+-";
-		return row(0) + '\n' + horizBar + '\n' + row(1) + '\n' + horizBar + '\n' + row(2);
+	public void put(char c, int col, int row) {
+		grid[col][row] = c;
+		text.setText(drawText());
+	}
+
+	private String drawText() {
+		return row(0) + HORIZBAR + row(1) + HORIZBAR + row(2);
 	}
 
 	private String row(int c) {
-		return grid[0][c] + "|" + grid[1][c] + "|" + grid[2][c];
+		return " " + grid[0][c] + VERT + grid[1][c] + VERT + grid[2][c] + " ";
 	}
 }
