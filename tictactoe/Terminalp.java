@@ -1,10 +1,9 @@
-package tictactoe;
+/*package tictactoe;
 
 import javax.swing.JFrame;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 
-import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.terminal.swing.SwingTerminal;
 import com.googlecode.lanterna.gui.GUIScreen;
@@ -14,21 +13,31 @@ import com.googlecode.lanterna.gui.dialog.MessageBox;
 import com.googlecode.lanterna.gui.dialog.DialogButtons;
 import com.googlecode.lanterna.gui.dialog.DialogResult;
 
-public class Terminal extends GUIScreen implements MouseListener {
+public class Terminal implements MouseListener {
+
+	SwingTerminal console;
+	GUIScreen gui;
+	JFrame frame;
 
 	public Terminal() {
-		super(new Screen(TerminalFacade.createSwingTerminal(66,11)));
-		SwingTerminal console = (SwingTerminal) getScreen().getTerminal();
-		getScreen().startScreen();
+		console = TerminalFacade.createSwingTerminal(21, 10);
+		gui = TerminalFacade.createGUIScreen(console);
+		gui.getScreen().startScreen();
 
-		JFrame frame = console.getJFrame();
+		frame = console.getJFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Tic tac toe");
 		frame.addMouseListener(this);
 	}
 
-	public boolean updatePLS() {
-		return update();
+	public boolean promptRestart(int winner) {
+		MessageBox.showMessageBox(gui, "title", "message", DialogButtons.YES_NO);
+		//return (MessageBox.showMessageBox(gui, "title", "message", DialogButtons.YES_NO) == DialogResult.YES);
+		return true;
+	}
+
+	public void showWindow(Window window) {
+		gui.showWindow(window);
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -38,4 +47,4 @@ public class Terminal extends GUIScreen implements MouseListener {
 	public void mousePressed(MouseEvent e) { }
 	public void mouseEntered(MouseEvent e) { }
 	public void mouseExited(MouseEvent e) { }
-}
+}*/

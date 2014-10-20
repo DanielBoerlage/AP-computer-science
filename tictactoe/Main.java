@@ -8,33 +8,39 @@ import javax.swing.JFrame;
 
 public class Main {
 
-	public int startPlayer, playerTurn;
-	Board board;
+	public static int startPlayer, playerTurn;
+	static Board board;
+	static Terminal terminal;
+	static ScoreBoard scoreBoard;
 
-	public static void main(String[] args) {
-
-		Terminal terminal = new Terminal();
-		startPlayer = 2;   // will changed to player 1 in first beginGame() call
-		while(true) 
-			initialize board
-			pick starting player
-			while(no winner)
-				player 1 turn
-				player 2 turn
-			if(!play again)
-				exit*/
+	public static void main(String[] args) throws InterruptedException {
+		terminal = new Terminal();
+		board = new Board(terminal);
+		scoreBoard = new ScoreBoard(terminal);
+		startPlayer = 2;  // will be 1 in first game
+		beginGame();
+		Thread scoreBoardThread = new Thread(scoreBoard);
+		Thread boardThread = new Thread(board);
+		scoreBoardThread.start();
+		boardThread.start();
 	}
 
 	public static void beginGame() {
-		board = new Board();
-		playerTurn = startPlayer = (startPlayer == 2) ? 1 : 2;
-		while(!board.isFinished()) {
-
-		}
+		board.reset();
+		playerTurn = startPlayer = otherPlayer(startPlayer);
 	}
 
 	public static void takeTurn(int col, int row) {
-		board.put((playerTurn == 1) ? 'X' : 'O', col, row);
-		playerTurn = (playerTurn == 1) 
+		board.put((playerTurn == startPlayer) ? 'X' : 'O', col, row);
+		playerTurn = otherPlayer(playerTurn);
+		if(board.getWinner() != 0 || board.isFinished()) {
+			scoreBoard.addWinner(board.getWinner());
+			beginGame();
+			terminal.invalidate();
+		}
+	}
+
+	public static int otherPlayer(int player) {
+		return (player == 1) ? 2 : 1;
 	}
 }
