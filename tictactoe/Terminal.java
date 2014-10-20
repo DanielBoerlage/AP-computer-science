@@ -17,7 +17,7 @@ import com.googlecode.lanterna.gui.dialog.DialogResult;
 public class Terminal extends GUIScreen implements MouseListener {
 
 	public Terminal() {
-		super(new Screen(TerminalFacade.createSwingTerminal(66,11)));
+		super(new Screen(TerminalFacade.createSwingTerminal(64,11)));
 		SwingTerminal console = (SwingTerminal) getScreen().getTerminal();
 		getScreen().startScreen();
 
@@ -32,7 +32,8 @@ public class Terminal extends GUIScreen implements MouseListener {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		Main.takeTurn((e.getX() - 36) / 29, (e.getY() - 56) / 28);
+		System.out.println(e.getX() + " " + e.getY());
+		Main.takeTurn((e.getX() - 44) / 29, (e.getY() - 56) / 28);
 	}
 	public void mouseClicked(MouseEvent e) { }
 	public void mousePressed(MouseEvent e) { }

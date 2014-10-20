@@ -28,9 +28,10 @@ public class ScoreBoard extends Window implements Runnable {
 			player1Wins++;
 		else 
 			player2Wins++;
+		text.setText(drawText());
 	}
 
 	private String drawText() {
-		return "Player 1 wins: " + player1Wins + "\nPlayer 2 wins: " +  player2Wins + "\nDraws:         " + draws;
+		return "Player1 wins: " + player1Wins + "\nPlayer2 wins: " +  player2Wins + "\nDraws:        " + draws;
 	}
 }

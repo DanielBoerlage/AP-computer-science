@@ -31,6 +31,8 @@ public class Main {
 	}
 
 	public static void takeTurn(int col, int row) {
+		if(!board.isVacant(col, row))
+			return;
 		board.put((playerTurn == startPlayer) ? 'X' : 'O', col, row);
 		playerTurn = otherPlayer(playerTurn);
 		if(board.getWinner() != 0 || board.isFinished()) {

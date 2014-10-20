@@ -15,7 +15,7 @@ public class Board extends Window implements Runnable {
 	final String PLUS = "\u253c";
 	final String VERT = " \u2502 ";
 	final String HORIZ = "\u2500\u2500\u2500";
-	final String HORIZBAR = "\n" +  HORIZ + PLUS + HORIZ + PLUS + HORIZ + "\n";
+	final String HORIZBAR = "\n " +  HORIZ + PLUS + HORIZ + PLUS + HORIZ + "\n";
 
 	char[][] grid;  // [column] [row]
 	Label text;
@@ -62,6 +62,10 @@ public class Board extends Window implements Runnable {
 		return true;
 	}
 
+	public boolean isVacant(int col, int row) {
+		return grid[col][row] == ' ';
+	}
+
 	public void put(char c, int col, int row) {
 		if(grid[col][row] != ' ')  // vacancy check
 			return;
@@ -88,10 +92,10 @@ public class Board extends Window implements Runnable {
 	}
 
 	private String drawText() {
-		return row(0) + HORIZBAR + row(1) + HORIZBAR + row(2) + "\n player " + Main.otherPlayer(Main.playerTurn) + " turn";
+		return row(0) + HORIZBAR + row(1) + HORIZBAR + row(2) + "\n player" + Main.otherPlayer(Main.playerTurn) + " turn";
 	}
 
 	private String row(int c) {
-		return " " + grid[0][c] + VERT + grid[1][c] + VERT + grid[2][c] + " ";
+		return "  " + grid[0][c] + VERT + grid[1][c] + VERT + grid[2][c] + " ";
 	}
 }
