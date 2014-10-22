@@ -28,21 +28,6 @@ public class Board extends Window implements Runnable {
 		reset();
 		text = new Label(drawText());
 		addComponent(text);
-		/*addComponent(new Button("New window", new Action() {
-                @Override
-                public void doAction() {
-                	close();
-                    //getOwner().showWindow(new Board());
-                }
-        }));*/
-		/*addComponent(new Button("close", new Action() {
-            @Override
-            public void doAction() {
-                MessageBox.showMessageBox(getOwner(), "Information", "When you close this dialog, the owner window will close too");
-                close();
-                ((Terminal) getOwner()).updatePLS();
-            }
-        }));*/
 	}
 
 	public void run() {
@@ -73,29 +58,65 @@ public class Board extends Window implements Runnable {
 		text.setText(drawText());
 	}
 
-	public int getWinner() {
-		for(int i = 0; i < 3; i++) {  // does all 6 horizontal and vertical checks
-			if(grid[i][0] == 'X' && grid[i][1] == 'X' && grid[i][2] == 'X' || 
-			   grid[0][i] == 'X' && grid[1][i] == 'X' && grid[2][i] == 'X')
-				return Main.startPlayer;
-			if(grid[i][0] == 'O' && grid[i][1] == 'O' && grid[i][2] == 'O' || 
-			   grid[0][i] == 'O' && grid[1][i] == 'O' && grid[2][i] == 'O')
-				return Main.otherPlayer(Main.startPlayer);
+	int getWinner() {
+		for(int i = 0; i < 8; i++) {
+			char[] line = triad(i);
+			if(line[0] == line[1] && line[1] == line[2]) {
+				if(line[0] == 'X')
+					return Main.startPlayer;
+				else if(line[0] == 'O')
+					return Main.otherPlayer(Main.startPlayer);
+			}
 		}
-		if(grid[0][0] == 'X' && grid[1][1] == 'X' && grid[2][2] == 'X' || 
-		   grid[2][0] == 'X' && grid[1][1] == 'X' && grid[0][2] == 'X')
-				return Main.startPlayer;
-		if(grid[0][0] == 'O' && grid[1][1] == 'O' && grid[2][2] == 'O' || 
-		   grid[2][0] == 'O' && grid[1][1] == 'O' && grid[0][2] == 'O')
-				return Main.otherPlayer(Main.startPlayer);
-		return 0;  // draw
+		return 0;
+	}
+
+	/*
+
+	position
+
+	0 1 2
+	3 4 5
+	6 7 8
+
+
+	ways of winning (traid and codes)
+
+     0 1 2
+	3\| |/
+	 -+-+-
+	4 |X|
+	 -+-+-
+	5/| |\
+    7     6
+
+	*/
+
+	char[] triad(int code) {
+		if(code < 3)
+			return new char[] {grid[0][code], grid[1][code], grid[2][code]};
+		if(code < 6)
+			return grid[code/3];
+		if(code < 7)
+			return new char[] {grid[0][0], grid[1][1], grid[2][2]};
+		return new char[] {grid[2][0], grid[1][1], grid[0][2]};
+	}
+
+	int triadToPosition(int triadCode, int index) {
+		if(triadCode < 3)
+			return triadCode + 3 * index;
+		if(triadCode < 6)
+			return index + 3 * (triadCode - 3);
+		if(triadCode < 7)
+			return 4 * index;
+		return 2 + 2 * index;
 	}
 
 	private String drawText() {
-		return row(0) + HORIZBAR + row(1) + HORIZBAR + row(2) + "\n player" + Main.otherPlayer(Main.playerTurn) + " turn";
+		return drawRow(0) + HORIZBAR + drawRow(1) + HORIZBAR + drawRow(2) + "\n player" + Main.otherPlayer(Main.playerTurn) + " turn";
 	}
 
-	private String row(int c) {
+	private String drawRow(int c) {
 		return "  " + grid[0][c] + VERT + grid[1][c] + VERT + grid[2][c] + " ";
 	}
 }

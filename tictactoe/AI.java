@@ -1,6 +1,6 @@
 package tictactoe;
 
-public class AI extends Player {
+public class AI implements Player {
 
 	/*
 
@@ -13,6 +13,10 @@ public class AI extends Player {
 	6 7 8
 
 	*/
+
+	int makeMove() {
+		
+	}
 
 	int findMove(Grid grid, boolean friendlyTurn) {
 		if(grid.win())

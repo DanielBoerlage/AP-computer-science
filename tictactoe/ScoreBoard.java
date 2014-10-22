@@ -6,13 +6,14 @@ import com.googlecode.lanterna.gui.GUIScreen;
 
 public class ScoreBoard extends Window implements Runnable {
 
-	int player1Wins, player2Wins, draws;
+	int[] winCount;
 	Label text;
 	GUIScreen parent;
 
 	public ScoreBoard(GUIScreen parent) {
 		super("Scoreboard");
 		this.parent = parent;
+		winCount = new int[3];
 		text = new Label(drawText());
 		addComponent(text);
 	}
@@ -22,16 +23,11 @@ public class ScoreBoard extends Window implements Runnable {
 	}
 
 	public void addWinner(int winner) {
-		if(winner == 0)
-			draws++;
-		else if(winner == 1)
-			player1Wins++;
-		else 
-			player2Wins++;
+		winCount[winner]++;
 		text.setText(drawText());
 	}
 
 	private String drawText() {
-		return "Player1 wins: " + player1Wins + "\nPlayer2 wins: " +  player2Wins + "\nDraws:        " + draws;
+		return "Player1 wins: " + winCount[1] + "\nPlayer2 wins: " +  winCount[2] + "\nDraws:        " + winCount[0];
 	}
 }

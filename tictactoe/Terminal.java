@@ -32,7 +32,6 @@ public class Terminal extends GUIScreen implements MouseListener {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		System.out.println(e.getX() + " " + e.getY());
 		Main.takeTurn((e.getX() - 44) / 29, (e.getY() - 56) / 28);
 	}
 	public void mouseClicked(MouseEvent e) { }

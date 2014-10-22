@@ -1,10 +1,8 @@
 package tictactoe;
 
-public class Player {
+public interface Player {
 
-	public char friendlyChar, opponentChar;
+	char friendlyChar;
 
-	public int makeMove() {
-		return 0;
-	}
+	int makeMove();
 }
