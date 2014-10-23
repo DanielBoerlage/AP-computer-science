@@ -3,6 +3,7 @@ package tictactoe;
 import javax.swing.JFrame;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import java.awt.Point;
 
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.TerminalFacade;
@@ -15,6 +16,8 @@ import com.googlecode.lanterna.gui.dialog.DialogButtons;
 import com.googlecode.lanterna.gui.dialog.DialogResult;
 
 public class Terminal extends GUIScreen implements MouseListener {
+
+	private Point mousePos;
 
 	public Terminal() {
 		super(new Screen(TerminalFacade.createSwingTerminal(64,11)));
@@ -31,8 +34,21 @@ public class Terminal extends GUIScreen implements MouseListener {
 		return update();
 	}
 
+	public boolean hasMousePos() {
+		return mousePos != null;
+	}
+
+	public boolean getAndInvalidateMousePos() {
+		Point ret = mousePos.clone();
+		mousePos = null;
+		return ret;
+	}
+
 	public void mouseReleased(MouseEvent e) {
-		Main.takeTurn((e.getX() - 44) / 29, (e.getY() - 56) / 28);
+		synchronized(this) {
+			mousePos = e.getPoint();
+			notify();
+		}
 	}
 	public void mouseClicked(MouseEvent e) { }
 	public void mousePressed(MouseEvent e) { }

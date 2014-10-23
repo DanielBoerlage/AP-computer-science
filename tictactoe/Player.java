@@ -2,7 +2,7 @@ package tictactoe;
 
 public interface Player {
 
-	char friendlyChar;
+	char playerChar;
 
 	int makeMove();
 }

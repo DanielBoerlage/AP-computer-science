@@ -46,7 +46,9 @@ class Grid {
 				return false;
 		}
 		return true;
-	}	
+	}
+
+	//public boolean isValidMove(char playerChar, )	
 
 	public boolean win() {
 		return false;
