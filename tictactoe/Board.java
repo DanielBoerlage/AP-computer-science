@@ -10,65 +10,26 @@ import com.googlecode.lanterna.gui.dialog.MessageBox;
 import com.googlecode.lanterna.gui.dialog.DialogButtons;
 import com.googlecode.lanterna.gui.GUIScreen;
 
-public class Board extends Window implements Runnable {
+public class Board extends Window {
 
-	final String PLUS = "\u253c";
+	final String CROSS = "\u253c";
 	final String VERT = " \u2502 ";
 	final String HORIZ = "\u2500\u2500\u2500";
-	final String HORIZBAR = "\n " +  HORIZ + PLUS + HORIZ + PLUS + HORIZ + "\n";
+	final String HORIZBAR = "\n" + HORIZ + CROSS + HORIZ + CROSS + HORIZ + "\n";
 
-	char[][] grid;  // [column] [row]
-	Label text;
-	GUIScreen parent;
+	private Grid grid;
+	private Label text;
 
-	public Board(GUIScreen parent) {
+	public Board(Terminal parent) {
 		super("Game");
-		this.parent = parent;
-		grid = new char[3][3];
-		reset();
+		grid = new Grid();
 		text = new Label(drawText());
 		addComponent(text);
-	}
-
-	public void run() {
 		parent.showWindow(this, GUIScreen.Position.NEW_CORNER_WINDOW);
 	}
 
-	public void reset() {
-		for(int i = 0; i < 9; i++)
-			grid[i/3][i%3] = ' ';
-	}
-
-	public boolean isFinished() {
-		for(int i = 0; i < 9; i++) {
-			if(grid[i/3][i%3] == ' ')
-				return false;
-		}
-		return true;
-	}
-
-	public boolean isVacant(int col, int row) {
-		return grid[col][row] == ' ';
-	}
-
-	public void put(char c, int col, int row) {
-		if(grid[col][row] != ' ')  // vacancy check
-			return;
-		grid[col][row] = c;
-		text.setText(drawText());
-	}
-
-	int getWinner() {
-		for(int i = 0; i < 8; i++) {
-			char[] line = triad(i);
-			if(line[0] == line[1] && line[1] == line[2]) {
-				if(line[0] == 'X')
-					return Main.startPlayer;
-				else if(line[0] == 'O')
-					return Main.otherPlayer(Main.startPlayer);
-			}
-		}
-		return 0;
+	public Grid getGrid() {
+		return grid;
 	}
 
 	/*
@@ -113,10 +74,10 @@ public class Board extends Window implements Runnable {
 	}
 
 	private String drawText() {
-		return drawRow(0) + HORIZBAR + drawRow(1) + HORIZBAR + drawRow(2) + "\n player" + Main.otherPlayer(Main.playerTurn) + " turn";
+		return drawRow(0) + HORIZBAR + drawRow(1) + HORIZBAR + drawRow(2);
 	}
 
 	private String drawRow(int c) {
-		return "  " + grid[0][c] + VERT + grid[1][c] + VERT + grid[2][c] + " ";
+		return grid.get(0, c) + VERT + grid.get(1, c) + VERT + grid.get(2, c);
 	}
 }

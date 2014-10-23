@@ -2,10 +2,32 @@ package tictactoe;
 
 class Grid {
 
-	private char[][] grid;
+	/*
+
+	position
+
+	0 1 2
+	3 4 5
+	6 7 8
+
+
+	ways of winning (traid and codes)
+
+     0 1 2
+	3\| |/
+	 -+-+-
+	4 |X|
+	 -+-+-
+	5/| |\
+    7     6
+
+	*/
+
+	private char[][] grid;  // [col][row]
 
 	public Grid() {
 		grid = new char[3][3];
+		reset();
 	}
 
 	public Grid(Grid copyFrom) {
@@ -21,6 +43,10 @@ class Grid {
 
 	public char get(int position) {
 		return grid[position % 3][position / 3];
+	}
+
+	public char get(int col, int row) {
+		return grid[col][row];
 	}
 
 	public void put(char c, int position) {
