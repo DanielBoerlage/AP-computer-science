@@ -4,5 +4,5 @@ public interface Player {
 
 	char playerChar;
 
-	int makeMove();
+	int makeMove(Grid grid);
 }

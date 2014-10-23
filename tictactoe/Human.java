@@ -2,13 +2,16 @@ package tictactoe;
 
 import java.awt.Point;
 
-public class Human implements Player{
+public class Human implements Player {
 
-	public char friendlyChar;
+	public char playerChar;
 	private Terminal terminal;
 
+	public Human(Terminal terminal) {
+		this.terminal = terminal;
+	}
 
-	public int makeMove() {
+	public int makeMove(Grid grid) {
 		synchronized(terminal) {
 			try {
 				while(!terminal.hasMousePos())
@@ -18,10 +21,9 @@ public class Human implements Player{
 			}
 		}
 		Point p = terminal.getAndInvalidateMousePos();
-		int col = (p.x - 44) / 29;
-		int row = (p.y - 56) / 28;
-		if(invalidMove(col, row))
-			return makeMove();
-		return col + 3 * row;
+		int position = ((p.x - 44) / 29) + 3 * ((p.y - 56) / 28);
+		if(!grid.isLegalMove(position))
+			return makeMove(grid);
+		return position;
 	}
 }

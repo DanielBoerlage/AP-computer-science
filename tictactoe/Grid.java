@@ -27,6 +27,10 @@ class Grid {
 		grid[position % 3][position / 3] = c;
 	}
 
+	public boolean isVacant(int position) {
+		return get(position) == ' ';
+	}
+
 	public Grid putAndPop(char c, int position) {
 		Grid out = new Grid(this);
 		out.put(c, position);
@@ -48,7 +52,9 @@ class Grid {
 		return true;
 	}
 
-	//public boolean isValidMove(char playerChar, )	
+	public boolean isLegalMove(int position) {
+		return (position >= 0) && (position <= 8) && isVacant(position);
+	}
 
 	public boolean win() {
 		return false;

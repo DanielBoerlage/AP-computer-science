@@ -2,34 +2,26 @@ package tictactoe;
 
 public class AI implements Player {
 
-	/*
+	public char playerChar, opponentChar;
 
-	0  = draw
-	1  = win
-	-1 = loss
-
-	0 1 2
-	3 4 5
-	6 7 8
-
-	*/
-
-	int makeMove() {
-		
+	int makeMove(Grid grid) {
+		int bestVal = 0, bestPosition = 0;
+		for(int i = 0; i < 9; i++) {
+			int moveVal = findMove(grid, true);
+		}
 	}
 
 	int findMove(Grid grid, boolean friendlyTurn) {
-		if(grid.win())
+		if(grid.win(playerChar))
 			return 1;
-		if(grid.lose())
+		if(grid.lose(playerChar))
 			return -1;
 		if(grid.isFull())
 			return 0;
 		int best = (friendlyTurn) ? -1 : 1;
 		for(int i = 0; i < 9; i++) {
-			char c = grid.get(i);
-			if(c == ' ') {
-				int child = findMove(grid.putAndPop((friendlyTurn) ? friendlyChar : opponentChar, i), !friendlyTurn);
+			if(grid.isVacant(i)) {
+				int child = findMove(grid.putAndPop((friendlyTurn) ? playerChar : opponentChar, i), !friendlyTurn);
 				best = (friendlyTurn) ? Math.max(best, child) : Math.min(best, child);
 			}
 		}
