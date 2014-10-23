@@ -4,10 +4,11 @@ import java.awt.Point;
 
 public class Human implements Player {
 
-	public char playerChar;
+	private char playerChar;
 	private Terminal terminal;
 
-	public Human(Terminal terminal) {
+	public Human(char playerChar, Terminal terminal) {
+		this.playerChar = playerChar;
 		this.terminal = terminal;
 	}
 
