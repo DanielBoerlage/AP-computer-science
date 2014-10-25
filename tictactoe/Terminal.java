@@ -9,18 +9,13 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.terminal.swing.SwingTerminal;
 import com.googlecode.lanterna.gui.GUIScreen;
-import com.googlecode.lanterna.gui.Window;
-import com.googlecode.lanterna.gui.Border;
-import com.googlecode.lanterna.gui.dialog.MessageBox;
-import com.googlecode.lanterna.gui.dialog.DialogButtons;
-import com.googlecode.lanterna.gui.dialog.DialogResult;
 
 public class Terminal extends GUIScreen implements MouseListener {
 
 	private Point mousePos;
 
-	public Terminal() {
-		super(new Screen(TerminalFacade.createSwingTerminal(64,11)));
+	public Terminal(int cols, int rows) {
+		super(new Screen(TerminalFacade.createSwingTerminal(cols, rows)));
 		SwingTerminal console = (SwingTerminal) getScreen().getTerminal();
 		getScreen().startScreen();
 
@@ -38,8 +33,8 @@ public class Terminal extends GUIScreen implements MouseListener {
 		return mousePos != null;
 	}
 
-	public boolean getAndInvalidateMousePos() {
-		Point ret = mousePos.clone();
+	public Point getAndInvalidateMousePos() {
+		Point ret = new Point(mousePos);
 		mousePos = null;
 		return ret;
 	}

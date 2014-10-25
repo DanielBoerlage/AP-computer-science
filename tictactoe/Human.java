@@ -16,8 +16,8 @@ public class Human implements Player {
 		synchronized(terminal) {
 			try {
 				while(!terminal.hasMousePos())
-					terminal.wait()
-			} catch(InterruptionException e) {
+					terminal.wait();
+			} catch(InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
@@ -26,5 +26,9 @@ public class Human implements Player {
 		if(!grid.isLegalMove(position))
 			return makeMove(grid);
 		return position;
+	}
+
+	public char getPlayerChar() {
+		return playerChar;
 	}
 }

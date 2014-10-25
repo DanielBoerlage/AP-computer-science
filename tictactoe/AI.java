@@ -2,7 +2,7 @@ package tictactoe;
 
 public class AI implements Player {
 
-	public char playerChar, opponentChar;
+	private char playerChar, opponentChar;
 	private double clumsiness = .1;  // if this is zero, ai will never lose
 
 	public AI(char playerChar, char opponentChar, double clumsiness) {
@@ -13,22 +13,24 @@ public class AI implements Player {
 
 	public int makeMove(Grid grid) {
 		if(clumsiness > Math.random())
-			return randomMove();
+			return randomMove(grid);
 		int bestVal = -1, bestPosition = 0;
 		for(int i = 0; i < 9; i++) {
-			int moveVal = findMove(grid.putAndPop(playerChar, i), false);
-			if(moveVal > bestVal) {
-				bestVal = moveVal;
-				bestPosition = i;
+			if(grid.isVacant(i)) {
+				int moveVal = findMove(grid.putAndPop(playerChar, i), false);
+				if(moveVal > bestVal) {
+					bestVal = moveVal;
+					bestPosition = i;
+				}
 			}
 		}
 		return bestPosition;
 	}
 
 	private int findMove(Grid grid, boolean friendlyTurn) {
-		if(grid.win(playerChar))
+		if(grid.isWin(playerChar))
 			return 1;
-		if(grid.lose(playerChar))
+		if(grid.isLoss(opponentChar))
 			return -1;
 		if(grid.isFull())
 			return 0;
@@ -43,9 +45,13 @@ public class AI implements Player {
 	}
 
 	private int randomMove(Grid grid) {
-		int position = (int)(Math.random() * 9)
-		if(!grid.isVacant(pos))
+		int position = (int)(Math.random() * 9);
+		if(!grid.isVacant(position))
 			return randomMove(grid);
 		return position;
+	}
+
+	public char getPlayerChar() {
+		return playerChar;
 	}
 }

@@ -2,26 +2,11 @@ package tictactoe;
 
 class Grid {
 
-	/*
-
-	position
-
-	0 1 2
-	3 4 5
-	6 7 8
-
-
-	ways of winning (traid and codes)
-
-     0 1 2
-	3\| |/
-	 -+-+-
-	4 |X|
-	 -+-+-
-	5/| |\
-    7     6
-
-	*/
+	/* position
+	 * 0 1 2
+	 * 3 4 5
+	 * 6 7 8
+	 */
 
 	private char[][] grid;  // [col][row]
 
@@ -63,11 +48,8 @@ class Grid {
 		return out;
 	}
 
-	public char[] flatten() {
-		char[] out = new char[9];
-		for(int i = 0; i < 9; i++)
-			out[i] = get(i);
-		return out;
+	public boolean isLegalMove(int position) {
+		return (position >= 0) && (position <= 8) && isVacant(position);
 	}
 
 	public boolean isFull() {
@@ -78,15 +60,31 @@ class Grid {
 		return true;
 	}
 
-	public boolean isLegalMove(int position) {
-		return (position >= 0) && (position <= 8) && isVacant(position);
+	public boolean isWin(char playerChar) {
+		for(int i = 0; i < 3; i++) { // does all 6 horizontal and vertical checks
+			if(grid[i][0] == playerChar && grid[i][1] == playerChar && grid[i][2] == playerChar ||
+			   grid[0][i] == playerChar && grid[1][i] == playerChar && grid[2][i] == playerChar)
+				return true;
+		}
+		return grid[0][0] == playerChar && grid[1][1] == playerChar && grid[2][2] == playerChar ||
+			   grid[2][0] == playerChar && grid[1][1] == playerChar && grid[0][2] == playerChar;
 	}
 
-	public boolean win() {
-		return false;
+	public boolean isLoss(char opponentChar) {
+		return isWin(opponentChar);
 	}
 
-	public boolean lose() {
-		return false;
+	public boolean isDraw(char playerChar, char opponentChar) {
+		return isFull() && !isWin(playerChar) && !isWin(opponentChar);
+	}
+
+	public int getWinner(char player1Char, char player2Char) {
+		if(isWin(player1Char))
+			return 1;
+		if(isWin(player2Char))
+			return 2;
+		if(isDraw(player1Char, player2Char))
+			return 0;
+		return -1;
 	}
 }
