@@ -1,7 +1,5 @@
 package tictactoe;
 
-
-
 public class Main {
 
 	private static Terminal terminal;
@@ -13,9 +11,8 @@ public class Main {
 	public static void main(String[] args) {
 		initGUI();
 		initPlayers();
-		while(true) {
+		while(true)
 			takeTurn((playerTurn == 1) ? player1 : player2);
-		}
 	}
 
 	private static void initGUI() {
@@ -27,8 +24,10 @@ public class Main {
 	}
 
 	private static void initPlayers() {
-		player1 = new Human('X', terminal);
-		player2 = new Human('O', terminal);
+		//player1 = new Human('X', terminal);
+		//player2 = new Human('O', terminal);
+		player1 = new AI('X', 'O', 0.0);
+		player2 = new AI('O', 'X', 1.0);
 		playerTurn = startingPlayer = 1;
 	}
 
@@ -43,11 +42,19 @@ public class Main {
 	}
 
 	private static void restart() {
-		try {
-			Thread.sleep(1000);
+		if(scoreBoard.getWinCount(0) >= 99999 || scoreBoard.getWinCount(1) >= 999 || scoreBoard.getWinCount(2) >= 999) {
+			try {
+				Thread.sleep(2000);
+			} catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.exit(0);
+		}
+		/*try {
+			Thread.sleep(5);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 		board.reset();
 		playerTurn = startingPlayer = (startingPlayer == 1) ? 2 : 1;
 	}

@@ -3,7 +3,7 @@ package tictactoe;
 public class AI implements Player {
 
 	private char playerChar, opponentChar;
-	private double clumsiness = .1;  // if this is zero, ai will never lose
+	private double clumsiness;  // if this is zero, ai will never lose
 
 	public AI(char playerChar, char opponentChar, double clumsiness) {
 		this.playerChar = playerChar;

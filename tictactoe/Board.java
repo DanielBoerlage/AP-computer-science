@@ -1,8 +1,7 @@
 package tictactoe;
 
-
 import com.googlecode.lanterna.gui.Window;
-import com.googlecode.lanterna.gui.component.*;
+import com.googlecode.lanterna.gui.component.Label;
 import com.googlecode.lanterna.gui.GUIScreen;
 
 public class Board extends Window implements Runnable {
@@ -24,6 +23,10 @@ public class Board extends Window implements Runnable {
 		this.parent = parent;
 	}
 
+	public void run() {
+		parent.showWindow(this, GUIScreen.Position.NEW_CORNER_WINDOW);
+	}
+
 	public void put(char c, int position) {
 		grid.put(c, position);
 		text.setText(drawText());
@@ -32,10 +35,6 @@ public class Board extends Window implements Runnable {
 	public void reset() {
 		grid.reset();
 		text.setText(drawText());
-	}
-
-	public void run() {
-		parent.showWindow(this, GUIScreen.Position.NEW_CORNER_WINDOW);
 	}
 
 	public Grid getGrid() {

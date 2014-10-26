@@ -1,7 +1,7 @@
 package tictactoe;
 
 import com.googlecode.lanterna.gui.Window;
-import com.googlecode.lanterna.gui.component.*;
+import com.googlecode.lanterna.gui.component.Label;
 import com.googlecode.lanterna.gui.GUIScreen;
 
 public class ScoreBoard extends Window implements Runnable {
@@ -25,6 +25,10 @@ public class ScoreBoard extends Window implements Runnable {
 	public void incWinCount(int winner) {
 		winCount[winner]++;
 		text.setText(drawText());
+	}
+
+	public int getWinCount(int winner) {
+		return winCount[winner];
 	}
 
 	private String drawText() {
