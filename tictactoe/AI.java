@@ -1,5 +1,7 @@
 package tictactoe;
 
+import java.util.ArrayList;
+
 public class AI implements Player {
 
 	private char playerChar, opponentChar;
@@ -14,17 +16,21 @@ public class AI implements Player {
 	public int makeMove(Grid grid) {
 		if(clumsiness > Math.random())
 			return randomMove(grid);
-		int bestVal = -1, bestPosition = 0;
+		ArrayList<Integer> zeros = new ArrayList<Integer>(), ones = new ArrayList<Integer>();
 		for(int i = 0; i < 9; i++) {
 			if(grid.isVacant(i)) {
 				int moveVal = findMove(grid.putAndPop(playerChar, i), false);
-				if(moveVal > bestVal) {
-					bestVal = moveVal;
-					bestPosition = i;
-				}
+				if(moveVal == 1)
+					ones.add(i);
+				else if(moveVal == 0)
+					zeros.add(i);
 			}
 		}
-		return bestPosition;
+		if(ones.size() > 0)
+			return ones.get((int)(Math.random() * ones.size()));
+		if(zeros.size() > 0)
+			return zeros.get((int)(Math.random() * zeros.size()));
+		return randomMove(grid);
 	}
 
 	private int findMove(Grid grid, boolean friendlyTurn) {
