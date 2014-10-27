@@ -1,5 +1,7 @@
 package tictactoe;
 
+import java.util.ArrayList;
+
 public class AI implements Player {
 
 	private char playerChar, opponentChar;
@@ -12,19 +14,35 @@ public class AI implements Player {
 	}
 
 	public int makeMove(Grid grid) {
-		if(clumsiness > Math.random())
-			return randomMove(grid);
-		int bestVal = -1, bestPosition = 0;
+		ArrayList<Integer>[] moves = getMoves(grid);
+		if(!moves[1].isEmpty())
+			return moves[1].get((int)(Math.random() * moves[1].size()));
+		if(!moves[0].isEmpty())
+			return moves[0].get((int)(Math.random() * moves[0].size()));
+		return randomMove(grid);
+	}
+
+	private ArrayList<Integer>[] getMoves(Grid grid) {
+		ArrayList<Integer>[] out = new ArrayList<Integer>[2];
+		out[0] = new ArrayList<Integer>();
+		out[1] = new ArrayList<Integer>();
 		for(int i = 0; i < 9; i++) {
 			if(grid.isVacant(i)) {
 				int moveVal = findMove(grid.putAndPop(playerChar, i), false);
-				if(moveVal > bestVal) {
-					bestVal = moveVal;
-					bestPosition = i;
-				}
+				if(moveVal >= 0)
+					out[moveVal].add(i);
 			}
 		}
-		return bestPosition;
+		return out;
+	}
+
+	public boolean isPerfectMove(Grid grid, int move) {  // needs to be static
+		ArrayList<Integer>[] moves = getMoves(grid);
+		if(!moves[1].isEmpty())
+			return moves[1].contains(move);
+		if(!moves[0].isEmpty())
+			return moves[0].contains(move);
+		return true;
 	}
 
 	private int findMove(Grid grid, boolean friendlyTurn) {
