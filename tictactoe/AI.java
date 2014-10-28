@@ -14,25 +14,8 @@ public class AI implements Player {
 	}
 
 	public int makeMove(Grid grid) {
-
 		if(clumsiness > Math.random())
 			return randomMove(grid);
-		ArrayList<Integer> zeros = new ArrayList<Integer>(), ones = new ArrayList<Integer>();
-		for(int i = 0; i < 9; i++) {
-			if(grid.isVacant(i)) {
-				int moveVal = findMove(grid.putAndPop(playerChar, i), false);
-				if(moveVal == 1)
-					ones.add(i);
-				else if(moveVal == 0)
-					zeros.add(i);
-			}
-		}
-		if(ones.size() > 0)
-			return ones.get((int)(Math.random() * ones.size()));
-		if(zeros.size() > 0)
-			return zeros.get((int)(Math.random() * zeros.size()));
-		return randomMove(grid);
-
 		ArrayList<Integer>[] moves = getMoves(grid);
 		if(!moves[1].isEmpty())
 			return moves[1].get((int)(Math.random() * moves[1].size()));
@@ -42,7 +25,7 @@ public class AI implements Player {
 	}
 
 	private ArrayList<Integer>[] getMoves(Grid grid) {
-		ArrayList<Integer>[] out = new ArrayList<Integer>[2];
+		ArrayList<Integer>[] out = new ArrayList[2];
 		out[0] = new ArrayList<Integer>();
 		out[1] = new ArrayList<Integer>();
 		for(int i = 0; i < 9; i++) {

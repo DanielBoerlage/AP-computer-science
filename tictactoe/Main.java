@@ -24,9 +24,9 @@ public class Main {
 	}
 
 	private static void initPlayers() {
-		player1 = new Human('X', terminal);
+		//player1 = new Human('X', terminal);
 		//player2 = new Human('O', terminal);
-		//player1 = new AI('X', 'O', 1.0);
+		player1 = new AI('X', 'O', 0.0);
 		player2 = new AI('O', 'X', 1.0);
 		playerTurn = startingPlayer = 1;
 	}
@@ -45,11 +45,11 @@ public class Main {
 		if(scoreBoard.getWinCount(0) >= 99999 || scoreBoard.getWinCount(1) >= 999 || scoreBoard.getWinCount(2) >= 999) {
 			System.exit(0);
 		}
-		try {
+		/*try {
 			Thread.sleep(500);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 		board.reset();
 		playerTurn = startingPlayer = (startingPlayer == 1) ? 2 : 1;
 	}

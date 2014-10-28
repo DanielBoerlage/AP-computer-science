@@ -8,11 +8,13 @@ public class Human implements Player {
 	private char playerChar;
 	private Terminal terminal;
 	private ArrayList<Boolean> mistakeHistory;
+	private AI monitor;
 
-	public Human(char playerChar, Terminal terminal) {
+	public Human(char playerChar, char opponentChar, Terminal terminal) {
 		this.playerChar = playerChar;
 		this.terminal = terminal;
-		mistakeHistory = new ArrayList<Boolean>();
+		monitor = new AI(playerChar, opponentChar, 0.0);
+		mistakeHistory = new ArrayList<Boolean>();  // true = mistake
 	}
 
 	public int makeMove(Grid grid) {
@@ -29,23 +31,16 @@ public class Human implements Player {
 		if(!grid.isLegalMove(position))
 			return makeMove(grid);
 
-		if(AI.)
-
-
-		return position;
-	}
-
-	public void onMistake() {
-		mistakeHistory.add(true);
+		mistakeHistory.add(!monitor.isPerfectMove());
 		if(mistakeHistory.size() > 40)
 			mistakeHistory.remove(0);
-	}
 
-	public void onPerfectMove() {
-		mistakeHistory.add(false);
+		return position;
 	}
 
 	public char getPlayerChar() {
 		return playerChar;
 	}
 }
+
+//email: byngcompsci@gmail.com
