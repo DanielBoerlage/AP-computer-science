@@ -14,6 +14,7 @@ public class AI implements Player {
 	}
 
 	public int makeMove(Grid grid) {
+
 		if(clumsiness > Math.random())
 			return randomMove(grid);
 		ArrayList<Integer> zeros = new ArrayList<Integer>(), ones = new ArrayList<Integer>();
@@ -31,6 +32,37 @@ public class AI implements Player {
 		if(zeros.size() > 0)
 			return zeros.get((int)(Math.random() * zeros.size()));
 		return randomMove(grid);
+
+		ArrayList<Integer>[] moves = getMoves(grid);
+		if(!moves[1].isEmpty())
+			return moves[1].get((int)(Math.random() * moves[1].size()));
+		if(!moves[0].isEmpty())
+			return moves[0].get((int)(Math.random() * moves[0].size()));
+		return randomMove(grid);
+	}
+
+	private ArrayList<Integer>[] getMoves(Grid grid) {
+		ArrayList<Integer>[] out = new ArrayList<Integer>[2];
+		out[0] = new ArrayList<Integer>();
+		out[1] = new ArrayList<Integer>();
+		for(int i = 0; i < 9; i++) {
+			if(grid.isVacant(i)) {
+				int moveVal = findMove(grid.putAndPop(playerChar, i), false);
+				if(moveVal >= 0)
+					out[moveVal].add(i);
+			}
+		}
+		return out;
+	}
+
+	public boolean isPerfectMove(Grid grid, int move) {  // needs to be static
+		ArrayList<Integer>[] moves = getMoves(grid);
+		if(!moves[1].isEmpty())
+			return moves[1].contains(move);
+		if(!moves[0].isEmpty())
+			return moves[0].contains(move);
+		return true;
+
 	}
 
 	private int findMove(Grid grid, boolean friendlyTurn) {
