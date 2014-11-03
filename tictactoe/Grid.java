@@ -42,6 +42,15 @@ class Grid {
 		return get(position) == ' ';
 	}
 
+	public int nVacant() {
+		int n = 0;
+		for(int i = 0; i < 9; i++) {
+			if(get(i) == ' ')
+				n++;
+		}
+		return n;
+	}
+
 	public Grid putAndPop(char c, int position) {
 		Grid out = new Grid(this);
 		out.put(c, position);
@@ -50,14 +59,6 @@ class Grid {
 
 	public boolean isLegalMove(int position) {
 		return (position >= 0) && (position <= 8) && isVacant(position);
-	}
-
-	public boolean isFull() {
-		for(int i = 0; i < 9; i++) {
-			if(get(i) == ' ')
-				return false;
-		}
-		return true;
 	}
 
 	public boolean isWin(char playerChar) {
@@ -70,12 +71,12 @@ class Grid {
 			   grid[2][0] == playerChar && grid[1][1] == playerChar && grid[0][2] == playerChar;
 	}
 
-	public boolean isLoss(char opponentChar) {
+	public boolean isLoss(char opponentChar) { // remove
 		return isWin(opponentChar);
 	}
 
 	public boolean isDraw(char playerChar, char opponentChar) {
-		return isFull() && !isWin(playerChar) && !isWin(opponentChar);
+		return (nVacant() == 0) && !isWin(playerChar) && !isWin(opponentChar);
 	}
 
 	public int getWinner(char player1Char, char player2Char) {
@@ -83,7 +84,7 @@ class Grid {
 			return 1;
 		if(isWin(player2Char))
 			return 2;
-		if(isDraw(player1Char, player2Char))
+		if(isDraw(player1Char, player2Char))  // cahnge
 			return 0;
 		return -1;
 	}
