@@ -22,7 +22,7 @@ class Grid {
 	}
 
 	public void reset() {
-		for(int i = 0; i < 9; i++) 
+		for(int i = 0; i < 9; i++)
 			put(' ', i);
 	}
 
@@ -88,4 +88,6 @@ class Grid {
 			return 0;
 		return -1;
 	}
+
+	//this is a test
 }
