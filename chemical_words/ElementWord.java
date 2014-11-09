@@ -4,15 +4,16 @@ import java.util.ArrayList;
 
 public class ElementWord {
 
-	private ArrayList<Element> word;
+	private Element[] word;
 	private boolean DNE;
 
 	public ElementWord() {
 		DNE = true;
 	}
 
-	public ElementWord(ArrayList<Element> word) {
-		this.word = word;
+	public ElementWord(Element[] copyFrom) {
+		word = new Element[copyFrom.length];
+		System.arraycopy(copyFrom, 0, word, 0, copyFrom.length);
 		DNE = false;
 	}
 
@@ -20,11 +21,11 @@ public class ElementWord {
 		if(DNE)
 			return "Does not exist";
 		String out = "";
-		for(int i = 0; i < word.size(); i++)
-			out += word.get(i).getSymbol();
+		for(int i = 0; i < word.length; i++)
+			out += word[i].getSymbol();
 		out += "\n";
-		for(int i = 0; i < word.size(); i++)
-			out += word.get(i).getName() + " ";
+		for(int i = 0; i < word.length; i++)
+			out += word[i].getName() + " ";
 		return out;
 	}
 }
