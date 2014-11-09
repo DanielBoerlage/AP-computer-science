@@ -3,7 +3,7 @@ package chemical_words;
 public class Combinatorics {
 
     public static Combination[] getCombinations(int nElements) {  // adjust for higher bit sums precedence
-        int nCombinations = (int)Math.pow(2, n);
+        int nCombinations = (int)Math.pow(2, nElements);
         Combination[] out = new Combination[nCombinations];
         for(int bin = 0; bin < nCombinations; bin++) {
             boolean[] boolCombo = new boolean[nElements];
@@ -13,7 +13,7 @@ public class Combinatorics {
         }
         return out;
     }
-    
+
     public static class Combination {
 
         private boolean[] combination;
@@ -25,6 +25,13 @@ public class Combinatorics {
 
         public boolean[] getCombination() {
             return combination;
+        }
+
+        public String toString() {
+            String out = "";
+            for(int i = 0; i < combination.length; i++)
+                out += "[" + i + "] " + combination[i] + "\n";
+            return out;
         }
     }
 
