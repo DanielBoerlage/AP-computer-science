@@ -2,20 +2,19 @@ package chemical_words;
 
 public class Combinatorics {
 
-    /**
-     *@param n number of elements to be combined
-     */
-    //public static Combination[] getCombinations(int n) {
-    //    Combination[] out = new Combination[]
-    //    for(int bin = 0; bin < n; bin++)
-    //}
-
-    public static Combination getCombination(boolean[] copyFrom) {
-        return new Combination(copyFrom);
+    public static Combination[] getCombinations(int nElements) {  // adjust for higher bit sums precedence
+        int nCombinations = (int)Math.pow(2, n);
+        Combination[] out = new Combination[nCombinations];
+        for(int bin = 0; bin < nCombinations; bin++) {
+            boolean[] boolCombo = new boolean[nElements];
+            for(int dig = 0; dig < nElements; dig++)
+                boolCombo[dig] = (bin >> dig & 1) == 1;
+            out[bin] = new Combination(boolCombo);
+        }
+        return out;
     }
-
-
-    static class Combination {
+    
+    public static class Combination {
 
         private boolean[] combination;
 
