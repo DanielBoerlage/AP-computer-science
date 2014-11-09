@@ -5,22 +5,28 @@ public class Combinatorics {
     /**
      *@param n number of elements to be combined
      */
-    public static Combination[] getCombinations(int n) {
-        for(int bin = 0; bin < n)
+    //public static Combination[] getCombinations(int n) {
+    //    Combination[] out = new Combination[]
+    //    for(int bin = 0; bin < n; bin++)
+    //}
+
+    public static Combination getCombination(boolean[] copyFrom) {
+        return new Combination(copyFrom);
     }
 
-}
 
-class Combination {
+    static class Combination {
 
-    private boolean[] combination;
+        private boolean[] combination;
 
-    public Combination(boolean... copyFrom) {
-        combination = new boolean[copyFrom.length];
-        System.arraycopy(copyFrom, 0, combination, 0, copyFrom.length);
+        private Combination(boolean[] copyFrom) {
+            combination = new boolean[copyFrom.length];
+            System.arraycopy(copyFrom, 0, combination, 0, copyFrom.length);
+        }
+
+        public boolean[] getCombination() {
+            return combination;
+        }
     }
 
-    public boolean[] getCombination() {
-        return combination;
-    }
 }
