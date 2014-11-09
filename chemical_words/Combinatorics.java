@@ -23,8 +23,21 @@ public class Combinatorics {
             System.arraycopy(copyFrom, 0, combination, 0, copyFrom.length);
         }
 
+        public boolean getStateAt(int i) {
+            return combination[i];
+        }
+
         public boolean[] getCombination() {
             return combination;
+        }
+
+        public int getSum() {
+            int sum = 0;
+            for(boolean bool : combination) {
+                if(bool)
+                    sum++;
+            }
+            return sum;
         }
 
         public String toString() {

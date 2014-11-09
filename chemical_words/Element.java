@@ -9,6 +9,10 @@ public class Element {
 		this.name = name;
 	}
 
+	public boolean isSingle() {
+		return symbol.length() == 1;
+	}
+
 	public String getSymbol() {
 		return symbol;
 	}

@@ -14,7 +14,7 @@ public class Main {
 		try {
 			File src = new File("C:/Users/Daniel/Desktop/github/AP-computer-science/chemical_words/elements.tsv");
 			ElementDict dict = new ElementDict(src);
-			System.out.println(dict);
+			System.out.println(dict.hasDouble('A', 'C'));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

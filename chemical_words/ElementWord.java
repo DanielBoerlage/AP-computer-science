@@ -17,6 +17,14 @@ public class ElementWord {
 		DNE = false;
 	}
 
+	public int length() {
+		return word.length();
+	}
+
+	public int getElementAt(int i) {
+		return word[i];
+	}
+
 	public String toString() {
 		if(DNE)
 			return "Does not exist";

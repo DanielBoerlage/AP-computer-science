@@ -23,6 +23,34 @@ public class ElementDict {
         elements = elementList.toArray(elements);
     }
 
+    public Element getElement(String symbol) {
+        for(Element element : elements) {
+            if(element.getSymbol().equals(symbol))
+                return element;
+        }
+        return null;
+    }
+
+    public boolean hasSingle(char c) {
+        c = Character.toUpperCase(c);
+        for(Element element : elements) {
+            if(element.getSymbol().charAt(0) == c)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasDouble(char c, char cSucc) {
+        c = Character.toUpperCase(c);
+        cSucc = Character.toLowerCase(cSucc);
+        for(Element element : elements) {
+            String symbol = element.getSymbol();
+            if(symbol.length() == 2 && symbol.charAt(0) == c && symbol.charAt(1) == cSucc)
+                return true;
+        }
+        return false;
+    }
+
     public String toString() {
         String out = "";
         for(Element element : elements)
