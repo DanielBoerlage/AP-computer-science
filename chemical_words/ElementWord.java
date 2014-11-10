@@ -18,11 +18,15 @@ public class ElementWord {
 	}
 
 	public int length() {
-		return word.length();
+		return word.length;
 	}
 
-	public int getElementAt(int i) {
+	public Element getElementAt(int i) {
 		return word[i];
+	}
+
+	public boolean exists() {
+		return !DNE;
 	}
 
 	public String toString() {

@@ -25,7 +25,7 @@ public class ElementDict {
 
     public Element getElement(String symbol) {
         for(Element element : elements) {
-            if(element.getSymbol().equals(symbol))
+            if(element.getSymbol().equalsIgnoreCase(symbol))
                 return element;
         }
         return null;
@@ -34,7 +34,8 @@ public class ElementDict {
     public boolean hasSingle(char c) {
         c = Character.toUpperCase(c);
         for(Element element : elements) {
-            if(element.getSymbol().charAt(0) == c)
+            String symbol = element.getSymbol();
+            if(symbol.length() == 1 && symbol.charAt(0) == c)
                 return true;
         }
         return false;
