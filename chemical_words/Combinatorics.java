@@ -2,6 +2,7 @@ package chemical_words;
 
 public class Combinatorics {
 
+<<<<<<< HEAD
     public static Combination[] getCombinations(int nElements) {  // adjust for higher bit sums precedence
         int nCombinations = (int)Math.pow(2, nElements);
         Combination[] out = new Combination[nCombinations];
