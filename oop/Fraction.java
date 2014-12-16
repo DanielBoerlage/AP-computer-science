@@ -1,12 +1,20 @@
+package oop;
+
 public class Fraction {
+
+//############################################################################  FIELDS
 
     private int numerator;
     private int denominator;
+    private boolean sign;
 
+
+//############################################################################  CONSTRUCTORS
 
     public Fraction(int numerator, int denominator) {
-        this.numerator = numerator;
-        this.denominator = denominator;
+        this.numerator = Math.abs(numerator);
+        this.denominator = Math.abs(denominator);
+        sign = numerator * denominator > 0;
     }
 
     public Fraction() {
@@ -15,13 +23,15 @@ public class Fraction {
 
     public Fraction(String str) {
         int iSlash = str.indexOf("/");
-        numerator = Integer.parseInt(str.substring(0, iSlash));
-        denominator = Integer.parseInt(str.substring(iSlash + 1));
+        this(Integer.parseInt(str.substring(0, iSlash)), Integer.parseInt(str.substring(iSlash + 1)));
     }
 
     public Fraction(Fraction copyFrom) {
         this(copyFrom.numerator, copyFrom.denominator);
     }
+
+
+//############################################################################  GETTERS
 
     public int getNumerator() {
         return numerator;
@@ -31,23 +41,20 @@ public class Fraction {
         return denominator;
     }
 
+    public boolean isPositive() {
+        return sign;
+    }
+
     public String toString() {
-        return numerator + "/" + denominator;
+        return (sign ? "" : "-") + numerator + "/" + denominator;
     }
 
     public double toDouble() {
-        return (double)numerator / denominator;
+        return ((sign ? 1.0 : -1.0) * numerator) / denominator;
     }
 
-    private int gcf(int a, int b) {
-        while(a != b) {
-            if(a > b)
-                a -= b;
-            else
-                b -= a;
-        }
-        return a;
-    }
+
+//############################################################################  MODIFIERS
 
     public Fraction reduce() {
         int gcf = gcf(numerator, denominator);
@@ -55,6 +62,9 @@ public class Fraction {
         denominator /= gcf;
         return this;
     }
+
+//############################################################################  NON-MODIFING MATHS
+
 
     public Fraction negate() {
         return new Fraction(numerator * -1, denominator);
@@ -64,30 +74,46 @@ public class Fraction {
         return new Fraction(denominator, numerator);
     }
 
+
+//############################################################################  STATIC MATHS
+
     public static Fraction product(Fraction... multiplicands) {
-        Fraction out = new Fraction();  // multiplicative identity
+        Fraction out = new Fraction(1, 1);  // multiplicative identity
         for(Fraction frac : multiplicands) {
             out.numerator *= frac.numerator;
             out.denominator *= frac.denominator;
+            out.sign = 
         }
-        return out.reduce();
+        return out.simplify();
     }
 
     public static Fraction quotient(Fraction divisor, Fraction dividend) {
-        return product(divsor, dividend.recip());
+        return product(divisor, dividend.recip());
     }
 
     public static Fraction sum(Fraction... addends) {
         Fraction out = new Fraction(0, 1);  // additive identity
         for(Fraction frac : addends) {
-            int lcd = out.denominator * frac.denominator / gcf(out.denominaotr, frac.denominator);
-            int numerator = out.numerator * (lcd / out.denominator) + frac.numerator * (lcd / frac.demoninator);
+            int lcd = out.denominator * frac.denominator / gcf(out.denominator, frac.denominator);
+            int numerator = out.numerator * (lcd / out.denominator) + frac.numerator * (lcd / frac.denominator);
             out = new Fraction(numerator, lcd);
         }
-        return out.reduce();
+        return out.simplify();
     }
 
     public static Fraction difference(Fraction subtractor, Fraction subtractent) {
-        return sum(subtractor, subtractant.negate());
+        return sum(subtractor, subtractent.negate());
+    }
+
+//############################################################################  UTILS
+
+    private static int gcf(int a, int b) {
+        while(a != b) {
+            if(a > b)
+                a -= b;
+            else
+                b -= a;
+        }
+        return a;
     }
 }
