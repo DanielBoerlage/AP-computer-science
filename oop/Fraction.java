@@ -2,112 +2,58 @@ package oop;
 
 public class Fraction {
 
-//############################################################################  FIELDS
-
-    private int numerator;
-    private int denominator;
-    private boolean sign;
+    private int num;
+    private int den;
 
 
-//############################################################################  CONSTRUCTORS
+    public Fraction(int num, int den) {
+        if(den < 0) {
+            num *= -1;
+            den *= -1;
+        }
+        this.num = num;
+        this.den = den;
+    }
 
-    public Fraction(int numerator, int denominator) {
-        this.numerator = Math.abs(numerator);
-        this.denominator = Math.abs(denominator);
-        sign = numerator * denominator > 0;
+    public Fraction(String str) throws NumberFormatException {
+        int iSlash = str.indexOf("/");
+        if(iSlash < 0) {
+            num = Integer.parseInt(str);
+            den = 1;
+        } else {
+            num = Integer.parseInt(str.substring(0, iSlash));
+            den = Integer.parseInt(str.substring(iSlash + 1));
+        }
     }
 
     public Fraction() {
         this(1, 1);
     }
 
-    public Fraction(String str) {
-        int iSlash = str.indexOf("/");
-        this(Integer.parseInt(str.substring(0, iSlash)), Integer.parseInt(str.substring(iSlash + 1)));
-    }
-
     public Fraction(Fraction copyFrom) {
-        this(copyFrom.numerator, copyFrom.denominator);
+        this(copyFrom.num, copyFrom.den);
     }
-
-
-//############################################################################  GETTERS
 
     public int getNumerator() {
-        return numerator;
+        return Math.abs(num);
     }
 
     public int getDenominator() {
-        return denominator;
-    }
-
-    public boolean isPositive() {
-        return sign;
+        return den;
     }
 
     public String toString() {
-        return (sign ? "" : "-") + numerator + "/" + denominator;
+        if(den == 1)
+            return String.valueOf(num);
+        return num + "/" + den;
     }
 
     public double toDouble() {
-        return ((sign ? 1.0 : -1.0) * numerator) / denominator;
+        return (double)num / den;
     }
-
-
-//############################################################################  MODIFIERS
-
-    public Fraction reduce() {
-        int gcf = gcf(numerator, denominator);
-        numerator /= gcf;
-        denominator /= gcf;
-        return this;
-    }
-
-//############################################################################  NON-MODIFING MATHS
-
-
-    public Fraction negate() {
-        return new Fraction(numerator * -1, denominator);
-    }
-
-    public Fraction recip() {
-        return new Fraction(denominator, numerator);
-    }
-
-
-//############################################################################  STATIC MATHS
-
-    public static Fraction product(Fraction... multiplicands) {
-        Fraction out = new Fraction(1, 1);  // multiplicative identity
-        for(Fraction frac : multiplicands) {
-            out.numerator *= frac.numerator;
-            out.denominator *= frac.denominator;
-            out.sign = 
-        }
-        return out.simplify();
-    }
-
-    public static Fraction quotient(Fraction divisor, Fraction dividend) {
-        return product(divisor, dividend.recip());
-    }
-
-    public static Fraction sum(Fraction... addends) {
-        Fraction out = new Fraction(0, 1);  // additive identity
-        for(Fraction frac : addends) {
-            int lcd = out.denominator * frac.denominator / gcf(out.denominator, frac.denominator);
-            int numerator = out.numerator * (lcd / out.denominator) + frac.numerator * (lcd / frac.denominator);
-            out = new Fraction(numerator, lcd);
-        }
-        return out.simplify();
-    }
-
-    public static Fraction difference(Fraction subtractor, Fraction subtractent) {
-        return sum(subtractor, subtractent.negate());
-    }
-
-//############################################################################  UTILS
 
     private static int gcf(int a, int b) {
+        a = Math.abs(a);
         while(a != b) {
             if(a > b)
                 a -= b;
@@ -115,5 +61,55 @@ public class Fraction {
                 b -= a;
         }
         return a;
+    }
+
+    public Fraction reduce() {
+        if(num == 0)
+            return new Fraction(0, 1);
+        if(den == 0)
+            return new Fraction(1, 0);
+        int gcf = gcf(num, den);
+        num /= gcf;
+        den /= gcf;
+        return this;
+    }
+
+    public Fraction negate() {
+        return new Fraction(num * -1, den);
+    }
+
+    public Fraction recip() {
+        return new Fraction(den, num);
+    }
+
+    public static boolean equals(Fraction a, Fraction b) {
+        return minus(a, b).num == 0;
+    }
+
+    public static Fraction mult(Fraction... fs) {
+        Fraction out = new Fraction(1, 1);  // multiplicative identity
+        for(Fraction f : fs) {
+            out.num *= f.num;
+            out.den *= f.den;
+        }
+        return out.reduce();
+    }
+
+    public static Fraction divide(Fraction a, Fraction b) {
+        return mult(a, b.recip());
+    }
+
+    public static Fraction plus(Fraction... fs) {
+        Fraction out = new Fraction(0, 1);  // additive identity
+        for(Fraction f : fs) {
+            int lcd = out.den * f.den / gcf(out.den, f.den);
+            int num = out.num * (lcd / out.den) + f.num * (lcd / f.den);
+            out = new Fraction(num, lcd);
+        }
+        return out.reduce();
+    }
+
+    public static Fraction minus(Fraction a, Fraction b) {
+        return plus(a, b.negate());
     }
 }
