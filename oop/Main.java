@@ -9,24 +9,90 @@ public class Main {
     public static void main(String[] args) {
         sc = new Scanner(System.in);
 
-        Fraction a;
-        Fraction b;
-
-        Fraction answer = new Fraction();
-        Fraction input = new Fraction();
-
-
         System.out.println("Fraction quiz\n");
 
+        Fraction a = Fraction.randomPositiveInteger(5);
+        Fraction b = Fraction.randomPositiveInteger(5);
+        test(Fraction.plus(a, b), getInput("1:  " + a + " + " + b + " = "));
 
-        a = randomNumber(10);
-        b = randomNumber(10);
-        answer = Fraction.plus(a, b);
-        input = getInput("1:  " + a + " + " + b + " = ");
-        if(Fraction.equals(answer, input)) {
+        a = Fraction.randomSignedInteger(20);
+        b = Fraction.randomSignedInteger(20);
+        if(b.isPositive())
+            test(Fraction.plus(a, b), getInput("2:  " + a + " + " + b + " = "));
+        else
+            test(Fraction.plus(a, b), getInput("2:  " + a + " - " + b.negate() + " = "));
+
+        a = Fraction.randomPositiveInteger(5);
+        b = Fraction.randomPositiveFraction(4, 4).reduce();
+        test(Fraction.plus(a, b), getInput("3:  " + a + " + " + b + " = "));
+
+
+        a = Fraction.randomSignedInteger(10);
+        b = Fraction.randomSignedFraction(6, 6).reduce();
+        if(b.isPositive())
+            test(Fraction.plus(a, b), getInput("4:  " + a + " + " + b + " = "));
+        else
+            test(Fraction.plus(a, b), getInput("4:  " + a + " - " + b.negate() + " = "));
+
+
+
+        a = Fraction.randomSignedFraction(10, 8);
+        b = Fraction.randomSignedFraction(10, 8);
+        if(b.isPositive())
+            test(Fraction.plus(a, b), getInput("5:  " + a + " + " + b + " = "));
+        else
+            test(Fraction.plus(a, b), getInput("5:  " + a + " - " + b.negate() + " = "));
+
+
+        a = Fraction.randomSignedInteger(10);
+        b = Fraction.randomSignedFraction(10, 8);
+        if(b.isPositive())
+            test(Fraction.mult(a, b), getInput("6:  " + a + " * " + b + " = "));
+        else
+            test(Fraction.mult(a, b), getInput("6:  " + a + " * (-" + b.negate() + ") = "));
+
+
+
+        a = Fraction.randomSignedFraction(15, 12);
+        b = Fraction.randomSignedFraction(15, 12);
+        if(b.isPositive())
+            test(Fraction.divide(a, b), getInput("7:  " + a + " / " + b + " = "));
+        else
+            test(Fraction.divide(a, b), getInput("7:  " + a + " / (-" + b.negate() + ") = "));
+
+
+
+        a = Fraction.randomSignedFraction(12, 9);
+        b = Fraction.randomPositiveFraction(12, 9);
+        Fraction c = Fraction.randomSignedFraction(8, 5);
+        if(c.isPositive())
+            test(Fraction.mult(a, b, c), getInput("8:  " + a + " * " + b + " * " + c " = "));
+        else
+            test(Fraction.mult(a, b, c), getInput("8:  " + a + + " * " + b + " * (-" + c.negate() + ") = "));
+
+        a = Fraction.randomSignedFraction(12, 9);
+        b = Fraction.randomPositiveFraction(10, 8);
+        c = Fraction.randomSignedFraction(8, 4);
+        if(c.isPositive())
+            test(Fraction.plus(a, b, c), getInput("9:  " + a + " + " + b + " + " + c " = "));
+        else
+            test(Fraction.plus(a, b, c), getInput("9:  " + a + + " + " + b + c.negate() + " = "));
+
+        a = Fraction.randomSignedFraction(12, 7);
+        b = Fraction.randomPositiveFraction(10, 8);
+        c = Fraction.randomPositiveFraction(8, 4);
+        Fraction d = Fraction.randomSignedFraction(5, 3);
+        if(c.isPositive())
+            test(Fraction.plus(Fraction.mult(a, b), Fraction.mult(c, d)), getInput("10:  " + a + " * " + b + " + " + c + " * " + d + " = "));
+        else
+            test(Fraction.plus(Fraction.mult(a, b), Fraction.mult(c, d)), getInput("10:  " + a + " * " + b + " + " + c + " * (-" + c.negate() + ") = "));
+    }
+
+    private static void test(Fraction answer, Fraction input) {
+        if(Fraction.equals(answer, input))
             System.out.println("Correct!\n");
-        } else {
-            System.out.println("Incorrect!\n");
+        else {
+            System.out.println("Incorrect!\nCorrect answer is: " + answer + "\n");
             System.exit(0);
         }
     }
@@ -41,13 +107,5 @@ public class Main {
             return getInput(prompt);
         }
         return out;
-    }
-
-    private static Fraction randomNumber(int max) {
-        return new Fraction((int)(Math.random() * max) + 1, 1);
-    }
-
-    private static Fraction randomFraction(int maxDenom, int maxNum) {
-        return new Fraction((int)(Math.random() * maxNum) + 1, (int)(Math.random() * maxDenom) + 1).reduce();
     }
 }

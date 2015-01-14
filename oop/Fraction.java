@@ -42,6 +42,10 @@ public class Fraction {
         return den;
     }
 
+    public boolean isPositive() {
+        return num * den >= 0;
+    }
+
     public String toString() {
         if(den == 1)
             return String.valueOf(num);
@@ -111,5 +115,27 @@ public class Fraction {
 
     public static Fraction minus(Fraction a, Fraction b) {
         return plus(a, b.negate());
+    }
+
+
+
+    private static int random(int min, int max) {
+        return (int)(Math.random() * (max - min + 1)) + min;
+    }
+
+    public static Fraction randomPositiveInteger(int max) {
+        return new Fraction(random(1, max), 1);
+    }
+
+    public static Fraction randomSignedInteger(int max) {
+        return new Fraction(random(-max, max), 1);
+    }
+
+    public static Fraction randomPositiveFraction(int maxNum, int maxDen) {
+        return new Fraction(random(1, maxNum), random(1, maxDen));
+    }
+
+    public static Fraction randomSignedFraction(int maxNum, int maxDen) {
+        return new Fraction(random(-maxNum, maxNum), random(-maxDen, maxDen));
     }
 }
