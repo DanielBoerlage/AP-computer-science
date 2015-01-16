@@ -66,17 +66,17 @@ public class Main {
         b = Fraction.randomPositiveFraction(12, 9);
         Fraction c = Fraction.randomSignedFraction(8, 5);
         if(c.isPositive())
-            test(Fraction.mult(a, b, c), getInput("8:  " + a + " * " + b + " * " + c " = "));
+            test(Fraction.mult(a, b, c), getInput("8:  " + a + " * " + b + " * " + c + " = "));
         else
-            test(Fraction.mult(a, b, c), getInput("8:  " + a + + " * " + b + " * (-" + c.negate() + ") = "));
+            test(Fraction.mult(a, b, c), getInput("8:  " + a + " * " + b + " * (-" + c.negate() + ") = "));
 
         a = Fraction.randomSignedFraction(12, 9);
         b = Fraction.randomPositiveFraction(10, 8);
         c = Fraction.randomSignedFraction(8, 4);
         if(c.isPositive())
-            test(Fraction.plus(a, b, c), getInput("9:  " + a + " + " + b + " + " + c " = "));
+            test(Fraction.plus(a, b, c), getInput("9:  " + a + " + " + b + " + " + c + " = "));
         else
-            test(Fraction.plus(a, b, c), getInput("9:  " + a + + " + " + b + c.negate() + " = "));
+            test(Fraction.plus(a, b, c), getInput("9:  " + a + " + " + b + c.negate() + " = "));
 
         a = Fraction.randomSignedFraction(12, 7);
         b = Fraction.randomPositiveFraction(10, 8);
