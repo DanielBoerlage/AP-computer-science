@@ -6,10 +6,19 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.io.IOException;
 
+import java.io.FileReader;
+import java.io.BufferedReader;
+
 public class WordList extends ArrayList<String> {
 
-    public WordList(File file) throws IOException {
-        super(Files.readAllLines(file.toPath(), StandardCharsets.UTF_8));
+    public WordList(File file, int wordLength) throws IOException {
+        super();
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String word;
+        while((word = reader.readLine()) != null)
+            if(word.length() == wordLength)
+                add(word);
+        reader.close();
     }
 
     public void removeWordsContaining(String str) {
@@ -18,18 +27,11 @@ public class WordList extends ArrayList<String> {
                 remove(i);
     }
 
-    public void keepWordsOfLength(int len) {
-        for(int i = 0; i < size(); i++) {
-            if(get(i).length() != len)
-                remove(i);
-            System.out.println("hi");
-        }
-    }
-
     public String toString() {
         String out = "Remaining words: [";
         for(String str : this)
             out += str + ", ";
+        out = out.substring(0, out.length() - 2);
         out += "]";
         return out;
     }
