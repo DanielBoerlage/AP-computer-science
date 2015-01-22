@@ -1,11 +1,20 @@
 package hangman;
 
+import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+
 public class Puzzle {
 
-    String word;
-//ArrayList<String> remainingWords;
+    public Puzzle() {
 
-/*    public Puzzle() {
-        word =
-    }*/
+    }
+
+    public boolean isUnsolved() {
+
+    }
+
+    public void show() {
+        
+    }
 }
