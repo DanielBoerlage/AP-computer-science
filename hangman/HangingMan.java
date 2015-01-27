@@ -20,10 +20,10 @@ public class HangingMan {
     }
 
     public boolean isntDead() {
-
+        return false;
     }
 
     public void show() {
-        
+
     }
 }
