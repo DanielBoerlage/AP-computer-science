@@ -1,3 +1,4 @@
 build.xml
+.atom-build.json
 bin/
 linux.words

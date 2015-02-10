@@ -16,14 +16,18 @@ public class HangingMan {
     };
 
     public HangingMan() {
-
+        numWrongGuesses = 0;
     }
 
     public boolean isntDead() {
-        return false;
+        return numWrongGuesses <= 5;
     }
 
     public void show() {
+        System.out.println(TXT_IMG[numWrongGuesses]);
+    }
 
+    public void dieSomeMore() {
+        numWrongGuesses++;
     }
 }
