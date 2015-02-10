@@ -12,15 +12,15 @@ import java.io.IOException;
 
 public class Puzzle {
 
-    private static final String FILE_NAME = "hangman/words.txt";
-    private String word;
-    private String guess;
-    private ArrayList<String> wordList;
+    public static final String FILE_NAME = "hangman/words.txt";
+    protected String word;
+    protected String guess;
+    protected ArrayList<String> wordList;
 
     public Puzzle() throws IOException {
         wordList = new ArrayList<String>(Files.readAllLines(new File(FILE_NAME).toPath(), StandardCharsets.UTF_8));
         guess = "";
-        word = wordList.get((int)(Math.random() * wordList.size())).toLowerCase();
+        word = getRandomWord();
     }
 
     public boolean isUnsolved() {
@@ -49,5 +49,9 @@ public class Puzzle {
             return true;
         this.guess += guess;
         return word.contains(guess);
+    }
+
+    protected String getRandomWord() {
+        return wordList.get((int)(Math.random() * wordList.size())).toLowerCase();
     }
 }

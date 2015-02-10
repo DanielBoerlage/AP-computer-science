@@ -7,7 +7,7 @@ public class Main {
     public static void main (String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         HangingMan hangingMan = new HangingMan();
-        Puzzle puzzle = new Puzzle();
+        Puzzle puzzle = new DodgingPuzzle();
 
         while (puzzle.isUnsolved() && hangingMan.isntDead()) {
             clearScreen();
@@ -17,6 +17,7 @@ public class Main {
             String guess = scanner.nextLine();
             if (!puzzle.makeGuess(guess))
                 hangingMan.dieSomeMore();
+
         }
 
         clearScreen();
