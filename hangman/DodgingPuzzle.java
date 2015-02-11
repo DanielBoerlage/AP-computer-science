@@ -42,16 +42,18 @@ public class DodgingPuzzle extends Puzzle {
     }
 
     public String getWord() {
-        if(word.equals(":undef"))
-            return getRandomWord();
-        return word;
+        //if(word.equals(":undef"))
+        //    return getRandomWord();
+        return word + " " + wordList;
     }
 
     public boolean makeGuess(String guess) {
         guess = guess.toLowerCase();
-        boolean ret = super.makeGuess(guess);
+        if(guess.length() != 1 || !Character.isLetter(guess.charAt(0)) || this.guess.contains(guess))
+            return true;
+        this.guess += guess;
         if(!word.equals(":undef"))
-            return ret;
+            return word.contains(guess);
         ArrayList<String> garbage = new ArrayList<String>();
         for(int i = wordList.size()-1; i >= 0; i--)
             if(wordList.get(i).toLowerCase().contains(guess)) {

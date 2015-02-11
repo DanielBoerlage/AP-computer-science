@@ -13,6 +13,7 @@ public class Main {
             clearScreen();
             hangingMan.show();
             puzzle.show();
+            System.out.println("\n word: " + puzzle.getWord());
             System.out.print("\nMake a guess: ");
             String guess = scanner.nextLine();
             if (!puzzle.makeGuess(guess))

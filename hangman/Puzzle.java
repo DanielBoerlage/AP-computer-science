@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class Puzzle {
 
-    public static final String FILE_NAME = "hangman/words.txt";
+    public static final String FILE_NAME = "hangman/test-words.txt";
     protected String word;
     protected String guess;
     protected ArrayList<String> wordList;
