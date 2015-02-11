@@ -13,9 +13,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class DodgingPuzzle extends Puzzle {
+public class DodgingPuzzle {//extends Puzzle {
 
-    private int wordLength;
+    /*private int wordLength;
 
     public DodgingPuzzle() throws IOException {
         wordList = new ArrayList<String>(Files.readAllLines(new File(FILE_NAME).toPath(), StandardCharsets.UTF_8));
@@ -153,5 +153,5 @@ public class DodgingPuzzle extends Puzzle {
             return true;
         }
         return false;
-    }
+    }*/
 }

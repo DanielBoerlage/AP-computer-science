@@ -9,7 +9,7 @@ public class Main {
     public static void main (String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         HangingMan hangingMan = new HangingMan();
-        Puzzle puzzle = new DodgingPuzzle();
+        Puzzle puzzle = new Puzzle();
 
         while (puzzle.isUnsolved() && hangingMan.isntDead()) {
             clearScreen();

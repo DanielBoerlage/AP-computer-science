@@ -16,10 +16,11 @@ public class Puzzle {
     protected ArrayList<Character> guesses;
     protected ArrayList<String> words;
     protected int wordLength;
+    protected String finalWord;
 
     public Puzzle() throws IOException {
         words = new ArrayList<String>(Files.readAllLines(new File(FILE_NAME).toPath(), StandardCharsets.UTF_8));
-        guess = "";
+        guesses = new ArrayList<Character>();
         String word = randomWord();
         wordLength = word.length();
         words = new ArrayList<String>();
@@ -27,44 +28,76 @@ public class Puzzle {
     }
 
     public boolean isUnsolved() {
-        for(char c : word.toCharArray())
-            if(!guess.contains(Character.toString(c)))
-                return true;
-        return false;
+        return words.size() > 0;
     }
 
     public void show() {
-        for(char c : word.toCharArray())
-            System.out.print((guess.contains(Character.toString(c))) ? (c + " ") : "_ ");
-        System.out.print("\nguesses: ");
-        for(int i = 0; i < guess.length(); i++)
-            System.out.print(guess.charAt(i) + (i == guess.length()-1 ? "" : ", "));
-        System.out.print("\n");
+
+
+
+        for(int i = 0; i < wordLength; i++) {
+            Character c = isUnsolved() ? words.get(0).charAt(i) : finalWord.charAt(i);
+            System.out.print((allWordsContain(c, i) && guesses.contains(c)) ? (c + " ") : "_ ");
+        }
+        System.out.println("\nguesses: " + guesses);
+
+
+
+
+
+
+
+
+
+        // for(char c : word.toCharArray())
+        //     System.out.print((guess.contains(Character.toString(c))) ? (c + " ") : "_ ");
+        // System.out.print("\nguesses: ");
+        // for(int i = 0; i < guess.length(); i++)
+        //     System.out.print(guess.charAt(i) + (i == guess.length()-1 ? "" : ", "));
+        // System.out.print("\n");
     }
 
     public String getWord() {
         return randomWord();
     }
 
-    public boolean makeGuess(String guess) {
-        if(guess.length() != 1 || !Character.isLetter(guess.charAt(0)) || this.guess.contains(guess))
+    public final boolean makeGuess(String guess) {
+        if(guess.length() != 1 || !Character.isLetter(guess.charAt(0)))
             return true;
         Character guessChar = new Character(guess.charAt(0));
-        guesses.add(guessChar)
-        return onMakeGuess(guessChar)
+        if(guesses.contains(guessChar))
+            return true;
+        guesses.add(guessChar);
+        return onMakeGuess(guessChar);
     }
 
     // rename
     protected boolean onMakeGuess(Character guess) {
-        for(int position = 0; i < wordLength; i++)
-            if(allWordsContain(guessChar), position)
+        removeGuessed();
+        for(int position = 0; position < wordLength; position++)
+            if(allWordsContain(guess, position))
                 return true;
         return false;
     }
 
     protected boolean allWordsContain(char c, int position) {
-        for(word : words)
-            if(word.charAt(position) != 'c')
+        for(String word : words)
+            if(word.charAt(position) != c)
+                return false;
+        return true;
+    }
+
+    protected void removeGuessed() {
+        finalWord = words.get(0);
+        for(int i = words.size()-1; i >= 0; i--) {
+            if(isGuessed(words.get(i)))
+                words.remove(i);
+        }
+    }
+
+    protected boolean isGuessed(String word) {
+        for(Character c : word.toCharArray())
+            if(!guesses.contains(c))
                 return false;
         return true;
     }
