@@ -97,27 +97,42 @@ public class DodgingPuzzle extends Puzzle {
 
         // inital values for minimization optimization; opposite of ideal values
         Pattern idealPattern = new Pattern(~0);
-        ArrayList<String> idealGroup = new ArrayList<String>();
+        ArrayList<ArrayList<String>> idealGroups = new ArrayList<ArrayList<String>>();
+        idealGroups.add(new ArrayList<String>());
 
         for (Entry<Pattern, ArrayList<String>> entry : patterns.entrySet()) {
             Pattern entryPattern = entry.getKey();
             ArrayList<String> entryWordGroup = entry.getValue();
-            if(entryPattern.isPreferedOver(idealPattern, entryWordGroup.size(), idealGroup.size())) {
-                idealPattern = entryPattern;
-                idealGroup = entryWordGroup;
+            switch(entryPattern.isPreferedOver(idealPattern, entryWordGroup.size(), idealGroups.get(0).size())) {
+                case 1:
+                    idealPattern = entryPattern;
+                    idealGroups = new ArrayList<ArrayList<String>>();
+                    idealGroups.add(entryWordGroup);
+                    break;
+                case 0:
+                    idealPattern = entryPattern;
+                    idealGroups.add(entryWordGroup);
+                    break;
             }
         }
 
         System.out.println("ideal Pattern: " + idealPattern);
-        System.out.println("ideal Group Size: " + idealGroup.size());
-        System.out.println("ideal Group: " + idealGroup);
+
+        System.out.println("ideal Groups: " + idealGroups);
 
 
+        ArrayList<String> finalWordGroup = idealGroups.get((int)(Math.random() * idealGroups.size()));
+        System.out.println("final group: " + finalWordGroup);
 
+        wordList = finalWordGroup;
 
+        // if(wordList.size() == 0) {
+        //     word = garbage.get((int)(Math.random() * garbage.size())).toLowerCase();
+        //     return true;
+        // }
 
-
-
+        // bitsum is 0 no chars matched
+        //return idealPattern != 0;
 
 
 

@@ -1,5 +1,7 @@
 package hangman;
 
+// THIS CLASS IS DANGEROUS AF
+// INSTANTIATE WITH CAUTION
 public class Pattern {
 
     public int bin;
@@ -21,12 +23,16 @@ public class Pattern {
 
     // basically always prefer the word group that shows the player the least number of chars (bitsum)
     // but if they are the same choose the one that results in the larger word group
-    public boolean isPreferedOver(Pattern other, int thisWordGroupSize, int otherWordGroupSize) {
+    public int isPreferedOver(Pattern other, int thisWordGroupSize, int otherWordGroupSize) {
         if(bitSum < other.bitSum)
-            return true;
+            return 1;
         if(bitSum > other.bitSum)
-            return false;
-        return thisWordGroupSize > otherWordGroupSize;
+            return -1;
+        if(thisWordGroupSize > otherWordGroupSize)
+            return 1;
+        if(thisWordGroupSize < otherWordGroupSize)
+            return -1;
+        return 0;
     }
 
     @Override
@@ -34,9 +40,10 @@ public class Pattern {
         return ((Pattern)obj).bin == bin;
     }
 
+    // maybe remove ?
     @Override
     public int hashCode() {
-        return bitSum;
+        return bin;
     }
 
     @Override

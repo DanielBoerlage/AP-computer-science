@@ -13,14 +13,17 @@ import java.io.IOException;
 public class Puzzle {
 
     public static final String FILE_NAME = "hangman/test-words.txt";
-    protected String word;
-    protected String guess;
-    protected ArrayList<String> wordList;
+    protected ArrayList<Character> guesses;
+    protected ArrayList<String> words;
+    protected int wordLength;
 
     public Puzzle() throws IOException {
-        wordList = new ArrayList<String>(Files.readAllLines(new File(FILE_NAME).toPath(), StandardCharsets.UTF_8));
+        words = new ArrayList<String>(Files.readAllLines(new File(FILE_NAME).toPath(), StandardCharsets.UTF_8));
         guess = "";
-        word = getRandomWord();
+        String word = randomWord();
+        wordLength = word.length();
+        words = new ArrayList<String>();
+        words.add(word);
     }
 
     public boolean isUnsolved() {
@@ -40,18 +43,33 @@ public class Puzzle {
     }
 
     public String getWord() {
-        return word;
+        return randomWord();
     }
 
     public boolean makeGuess(String guess) {
-        guess = guess.toLowerCase();
         if(guess.length() != 1 || !Character.isLetter(guess.charAt(0)) || this.guess.contains(guess))
             return true;
-        this.guess += guess;
-        return word.contains(guess);
+        Character guessChar = new Character(guess.charAt(0));
+        guesses.add(guessChar)
+        return onMakeGuess(guessChar)
     }
 
-    protected String getRandomWord() {
-        return wordList.get((int)(Math.random() * wordList.size())).toLowerCase();
+    // rename
+    protected boolean onMakeGuess(Character guess) {
+        for(int position = 0; i < wordLength; i++)
+            if(allWordsContain(guessChar), position)
+                return true;
+        return false;
+    }
+
+    protected boolean allWordsContain(char c, int position) {
+        for(word : words)
+            if(word.charAt(position) != 'c')
+                return false;
+        return true;
+    }
+
+    protected String randomWord() {
+        return words.get((int)(Math.random() * words.size())).toLowerCase();
     }
 }
