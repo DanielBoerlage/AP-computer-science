@@ -1,5 +1,6 @@
 package hangman;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,9 +13,16 @@ import java.io.IOException;
 
 public class DodgingPuzzle extends Puzzle {
 
+    private int wordLength;
+
     public DodgingPuzzle() throws IOException {
         wordList = new ArrayList<String>(Files.readAllLines(new File(FILE_NAME).toPath(), StandardCharsets.UTF_8));
-        int wordLength = getRandomWord().length();
+        int maxLength = 0;
+        for(String word : wordList)
+            if(word.length() > maxLength)
+                maxLength = word.length();
+        System.out.println("word length: " + maxLength);
+        wordLength = getRandomWord().length();
         for(int i = wordList.size()-1; i >= 0; i--)
             if(wordList.get(i).length() != wordLength)
                 wordList.remove(i);
@@ -55,6 +63,40 @@ public class DodgingPuzzle extends Puzzle {
         if(!word.equals(":undef"))
             return word.contains(guess);
         ArrayList<String> garbage = new ArrayList<String>();
+
+
+
+
+        HashMap<boolean[], ArrayList<String>> patterns = new HashMap<boolean[], ArrayList<String>>();
+        for (String word : wordList) {
+            boolean[] charPattern = new boolean[wordLength];
+            for (int i = 0; i < wordLength; i++)
+                charPattern[i] = word.charAt(i) == guess.charAt(0);
+            System.out.print("\n" + charPattern);
+            for(boolean bl : charPattern)
+                System.out.print(bl ? "1 " : "0 ");
+            if(patterns.get(charPattern) == null)
+                patterns.put(charPattern, new ArrayList<String>());
+            patterns.get(charPattern).add(word);
+        }
+        System.out.println(patterns);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         for(int i = wordList.size()-1; i >= 0; i--)
             if(wordList.get(i).toLowerCase().contains(guess)) {
                 garbage.add(wordList.get(i));
