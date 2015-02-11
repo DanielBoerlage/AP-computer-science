@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    /*public static void main (String[] args) throws Exception {
+    public static void main (String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         HangingMan hangingMan = new HangingMan();
         Puzzle puzzle = new DodgingPuzzle();
@@ -33,9 +33,9 @@ public class Main {
         } else {
             System.out.println("You lose! The word was " + puzzle.getWord());
         }
-    }*/
+    }
 
-    public static void main(String[] args) {
+    //public static void main(String[] args) {
         /*HashMap<boolean[], ArrayList<String>> ex = new HashMap<boolean[], ArrayList<String>>();
         boolean[] bool = {true, false};
         ArrayList<String> strs = new ArrayList<String>();
@@ -57,10 +57,61 @@ public class Main {
 
 
 
-        Pattern pattern = new Pattern(0);
-        pattern.setBit(true, 2);
-        System.out.println(pattern);
-    }
+        //Pattern pattern = new Pattern(0);
+        //pattern.setBit(true, 2);
+        //System.out.println(pattern);
+
+        // boolean[] f = {true};
+        // boolean[] s = {true};
+        //
+        // System.out.println(f + "  " + s);
+        // System.out.println(f.hashCode() + " " + s.hashCode());
+
+
+        // Object obj = new Object(){
+        //
+        //     public int bits;
+        //
+        //     @Override
+        //     public int hashCode() {
+        //         return bits;
+        //     }
+        //
+        //
+        // };
+        //
+        // System.out.println(obj.hashCode());
+        // System.out.println(obj.bits);
+
+        // Integer i = new Integer(0){
+        //     @Override
+        //     public int hashCode() {
+        //         return intValue();
+        //     }
+        // };
+        //
+        // i += 5;
+        // i <<= 1;
+        //
+        // System.out.println(i.hashCode());
+
+
+
+        // Integer i = 0;
+        //
+        // i |= true;
+        //
+        // System.out.println(i);
+
+
+        // Pattern lol;
+        // lol = new Pattern().bin = 1;
+        //
+        // for(int i = 0 ; i < 30; i++)
+        //     System.out.print((lol.bin >> i) & 1);
+        // System.out.println("\n"+lol);
+
+    //}
 
 
 

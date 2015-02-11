@@ -1,7 +1,9 @@
 package hangman;
 
+import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -67,19 +69,48 @@ public class DodgingPuzzle extends Puzzle {
 
 
 
-        HashMap<boolean[], ArrayList<String>> patterns = new HashMap<boolean[], ArrayList<String>>();
+
+
+
+
+
+
+
+
+
+
+        HashMap<Pattern, ArrayList<String>> patterns = new HashMap<Pattern, ArrayList<String>>();
         for (String word : wordList) {
-            boolean[] charPattern = new boolean[wordLength];
-            for (int i = 0; i < wordLength; i++)
-                charPattern[i] = word.charAt(i) == guess.charAt(0);
-            System.out.print("\n" + charPattern);
-            for(boolean bl : charPattern)
-                System.out.print(bl ? "1 " : "0 ");
+            Pattern charPattern = new Pattern();
+            for (int i = 0; i < wordLength; i++) {
+                int bit = (word.charAt(i) == guess.charAt(0)) ? 1 : 0;
+                charPattern.bitSum += bit;
+                charPattern.bin |= bit;
+                charPattern.bin <<= 1;
+            }
             if(patterns.get(charPattern) == null)
                 patterns.put(charPattern, new ArrayList<String>());
             patterns.get(charPattern).add(word);
         }
-        System.out.println(patterns);
+
+        System.out.println("patterns: " + patterns + "\n");
+
+        // inital values for minimization optimization; opposite of ideal values
+        Pattern idealPattern = new Pattern(~0);
+        ArrayList<String> idealGroup = new ArrayList<String>();
+
+        for (Entry<Pattern, ArrayList<String>> entry : patterns.entrySet()) {
+            Pattern entryPattern = entry.getKey();
+            ArrayList<String> entryWordGroup = entry.getValue();
+            if(entryPattern.isPreferedOver(idealPattern, entryWordGroup.size(), idealGroup.size())) {
+                idealPattern = entryPattern;
+                idealGroup = entryWordGroup;
+            }
+        }
+
+        System.out.println("ideal Pattern: " + idealPattern);
+        System.out.println("ideal Group Size: " + idealGroup.size());
+        System.out.println("ideal Group: " + idealGroup);
 
 
 
