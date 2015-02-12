@@ -13,26 +13,28 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class DodgingPuzzle {//extends Puzzle {
+public class DodgingPuzzle extends Puzzle {
 
-    /*private int wordLength;
+    //private int wordLength;
 
     public DodgingPuzzle() throws IOException {
-        wordList = new ArrayList<String>(Files.readAllLines(new File(FILE_NAME).toPath(), StandardCharsets.UTF_8));
-        int maxLength = 0;
-        for(String word : wordList)
-            if(word.length() > maxLength)
-                maxLength = word.length();
-        System.out.println("word length: " + maxLength);
-        wordLength = getRandomWord().length();
-        for(int i = wordList.size()-1; i >= 0; i--)
-            if(wordList.get(i).length() != wordLength)
-                wordList.remove(i);
-        guess = "";
-        word = ":undef";
+        words = new ArrayList<String>(Files.readAllLines(new File(FILE_NAME).toPath(), StandardCharsets.UTF_8));
+        guesses = new ArrayList<Character>();
+        wordLength = randomWord().length();
+
+
+//        System.out.println(wordLength);
+
+
+
+        for(int i = words.size()-1; i >= 0; i--) {
+            words.set(i, words.get(i).toLowerCase());
+            if(words.get(i).length() != wordLength)
+                words.remove(i);
+        }
     }
 
-    public void show() {
+    /*public void show() {
         if(!word.equals(":undef")) {
             super.show();
             return;
@@ -43,47 +45,30 @@ public class DodgingPuzzle {//extends Puzzle {
         for(int i = 0; i < guess.length(); i++)
             System.out.print(guess.charAt(i) + (i == guess.length()-1 ? "" : ", "));
         System.out.print("\n");
-    }
+    }*/
 
-    public boolean isUnsolved() {
+    /*ublic boolean isUnsolved() {
         if(word.equals(":undef"))
             return true;
         return super.isUnsolved();
-    }
+    }*/
 
-    public String getWord() {
-        //if(word.equals(":undef"))
-        //    return getRandomWord();
-        return word + " " + wordList;
-    }
+    // public String getWord() {
+    //     //if(word.equals(":undef"))
+    //     //    return randomWord();
+    //     return words.toString();
+    // }
 
-    public boolean makeGuess(String guess) {
-        guess = guess.toLowerCase();
-        if(guess.length() != 1 || !Character.isLetter(guess.charAt(0)) || this.guess.contains(guess))
-            return true;
-        this.guess += guess;
-        if(!word.equals(":undef"))
-            return word.contains(guess);
-        ArrayList<String> garbage = new ArrayList<String>();
-
-
-
-
-
-
-
-
-
-
+    public boolean onMakeGuess(Character guess) {
 
 
 
 
         HashMap<Pattern, ArrayList<String>> patterns = new HashMap<Pattern, ArrayList<String>>();
-        for (String word : wordList) {
+        for (String word : words) {
             Pattern charPattern = new Pattern();
             for (int i = 0; i < wordLength; i++) {
-                int bit = (word.charAt(i) == guess.charAt(0)) ? 1 : 0;
+                int bit = (word.charAt(i) == guess) ? 1 : 0;
                 charPattern.bitSum += bit;
                 charPattern.bin |= bit;
                 charPattern.bin <<= 1;
@@ -93,7 +78,20 @@ public class DodgingPuzzle {//extends Puzzle {
             patterns.get(charPattern).add(word);
         }
 
-        System.out.println("patterns: " + patterns + "\n");
+
+
+
+
+
+
+//        System.out.println("patterns: " + patterns + "\n");
+
+
+
+
+
+
+
 
         // inital values for minimization optimization; opposite of ideal values
         Pattern idealPattern = new Pattern(~0);
@@ -116,23 +114,64 @@ public class DodgingPuzzle {//extends Puzzle {
             }
         }
 
-        System.out.println("ideal Pattern: " + idealPattern);
 
-        System.out.println("ideal Groups: " + idealGroups);
+
+
+
+
+
+
+
+
+
+
+//        System.out.println("ideal Pattern: " + idealPattern);
+
+//        System.out.println("ideal Groups: " + idealGroups);
+
+
+
+
+
+
+
+
+
+
 
 
         ArrayList<String> finalWordGroup = idealGroups.get((int)(Math.random() * idealGroups.size()));
-        System.out.println("final group: " + finalWordGroup);
 
-        wordList = finalWordGroup;
 
+
+
+
+
+
+
+//        System.out.println("final group: " + finalWordGroup);
+
+
+
+
+
+
+
+
+
+
+
+
+        words = finalWordGroup;
+        removeGuessed();
+        //
         // if(wordList.size() == 0) {
         //     word = garbage.get((int)(Math.random() * garbage.size())).toLowerCase();
         //     return true;
         // }
 
         // bitsum is 0 no chars matched
-        //return idealPattern != 0;
+        return idealPattern.bitSum != 0;
 
 
 
@@ -143,15 +182,15 @@ public class DodgingPuzzle {//extends Puzzle {
 
 
 
-        for(int i = wordList.size()-1; i >= 0; i--)
-            if(wordList.get(i).toLowerCase().contains(guess)) {
-                garbage.add(wordList.get(i));
-                wordList.remove(i);
-            }
-        if(wordList.size() == 0) {
-            word = garbage.get((int)(Math.random() * garbage.size())).toLowerCase();
-            return true;
-        }
-        return false;
-    }*/
+        // for(int i = wordList.size()-1; i >= 0; i--)
+        //     if(wordList.get(i).toLowerCase().contains(guess)) {
+        //         garbage.add(wordList.get(i));
+        //         wordList.remove(i);
+        //     }
+        // if(wordList.size() == 0) {
+        //     word = garbage.get((int)(Math.random() * garbage.size())).toLowerCase();
+        //     return true;
+        // }
+        // return false;
+    }
 }

@@ -9,13 +9,26 @@ public class Main {
     public static void main (String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         HangingMan hangingMan = new HangingMan();
-        Puzzle puzzle = new Puzzle();
+        Puzzle puzzle = new DodgingPuzzle();
 
         while (puzzle.isUnsolved() && hangingMan.isntDead()) {
             clearScreen();
             hangingMan.show();
             puzzle.show();
-            System.out.println("\n word: " + puzzle.getWord());
+
+
+
+
+
+
+
+//            System.out.println("\n word: " + puzzle.getWord());
+
+
+
+
+
+
             System.out.print("\nMake a guess: ");
             String guess = scanner.nextLine();
             if (!puzzle.makeGuess(guess))
@@ -116,6 +129,6 @@ public class Main {
 
 
     private static void clearScreen() {
-        //System.out.println("\u001b[2J\u001b[H");
+        System.out.println("\u001b[2J\u001b[H");
     }
 }

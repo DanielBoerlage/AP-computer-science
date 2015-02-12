@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class Puzzle {
 
-    public static final String FILE_NAME = "hangman/test-words.txt";
+    public static final String FILE_NAME = "hangman/words.txt";
     protected ArrayList<Character> guesses;
     protected ArrayList<String> words;
     protected int wordLength;
@@ -21,7 +21,7 @@ public class Puzzle {
     public Puzzle() throws IOException {
         words = new ArrayList<String>(Files.readAllLines(new File(FILE_NAME).toPath(), StandardCharsets.UTF_8));
         guesses = new ArrayList<Character>();
-        String word = randomWord();
+        String word = randomWord().toLowerCase();
         wordLength = word.length();
         words = new ArrayList<String>();
         words.add(word);
@@ -34,27 +34,14 @@ public class Puzzle {
     public void show() {
 
 
+//        System.out.println("wordLength: " + wordLength);
+
 
         for(int i = 0; i < wordLength; i++) {
             Character c = isUnsolved() ? words.get(0).charAt(i) : finalWord.charAt(i);
             System.out.print((allWordsContain(c, i) && guesses.contains(c)) ? (c + " ") : "_ ");
         }
         System.out.println("\nguesses: " + guesses);
-
-
-
-
-
-
-
-
-
-        // for(char c : word.toCharArray())
-        //     System.out.print((guess.contains(Character.toString(c))) ? (c + " ") : "_ ");
-        // System.out.print("\nguesses: ");
-        // for(int i = 0; i < guess.length(); i++)
-        //     System.out.print(guess.charAt(i) + (i == guess.length()-1 ? "" : ", "));
-        // System.out.print("\n");
     }
 
     public String getWord() {
@@ -103,6 +90,6 @@ public class Puzzle {
     }
 
     protected String randomWord() {
-        return words.get((int)(Math.random() * words.size())).toLowerCase();
+        return words.get((int)(Math.random() * words.size()));
     }
 }
