@@ -4,15 +4,15 @@ public class HangingMan {
 
     private int numWrongGuesses;
 
-    public static final String[] TXT_IMG =
-    {
+    public static final String[] TXT_IMG = {
         "+----+\n|\n|\n|\n/\\\n",
         "+----+\n|    O\n|\n|\n/\\\n",
         "+----+\n|    O\n|    +\n|\n/\\\n",
         "+----+\n|    O\n|    +-\n|\n/\\\n",
         "+----+\n|    O\n|   -+-\n|\n/\\\n",
         "+----+\n|    O\n|   -+-\n|   / \n/\\\n",
-        "+----+\n|    O\n|   -+-\n|   / \\\n/\\\n"
+        "+----+\n|    O\n|   -+-\n|   / \\\n/\\\n",
+        "+----+\n|    x\n|   -+-\n|   / \\\n/\\\n"
     };
 
     public HangingMan() {
@@ -20,7 +20,7 @@ public class HangingMan {
     }
 
     public boolean isntDead() {
-        return numWrongGuesses <= 5;
+        return numWrongGuesses <= 6;
     }
 
     public void show() {
